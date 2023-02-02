@@ -1,1 +1,3 @@
-New file test
+New file test 
+
+CONFLICT
