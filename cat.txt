@@ -1,6 +1,0 @@
-New file test
-
-blabla
-New file test 
-
-CONFLICT
