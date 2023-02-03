@@ -1,5 +1,6 @@
 
 ------VARIABLE------
+--salut
 -- coucou
 ------TABLEAU------
 local backGround = {}
