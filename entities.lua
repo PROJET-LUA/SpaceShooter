@@ -1,14 +1,5 @@
 local Entities = {}
 
---- .json converter
-local cjson = require "cjson"
-local tempFile = io.open("weapons.json", "r")
-local json_string = tempFile:read("*all")
-tempFile:close()
-local weapons = cjson.decode(json_string)
-
-
-
 function Entities.Load()
     screenNoPlayLeft = 100 --variable definissant la zone non jouable a gauche en pixels
     screenNoPlayRight = 100 --variable definissant la zone non jouable a droite en pixels
