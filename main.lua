@@ -9,7 +9,7 @@ SetFullScreen = false
 ------FONCTION MOUSEPRESSED------
 ------FONCTION UTILE------
 local backGround = require("backGround")
-
+local myGame = require("game")
 
 -----LOAD----- : ACTION DU JEU AU DEMARAGE
 function love.load()
@@ -19,6 +19,7 @@ function love.load()
         scale_x = screenWidth / 800
         scale_y = screenHeight / 600
     end
+    myGame.Load()
 end
 
 -----UPDATE----- : ACTION DU JEU A CHAQUE FRAME  
@@ -29,6 +30,7 @@ function love.update(dt)
     if love.mouse.isDown(1) then
         print(love.mouse.getPosition())
     end
+    myGame.Update(dt)
 end
 
 
@@ -38,6 +40,7 @@ function love.draw()
     if (SetFullScreen) then love.graphics.scale(scale_x,scale_y) end
     ----------------------------------------------------
     backGround.draw()
+    myGame.Draw()
 end
 
 
