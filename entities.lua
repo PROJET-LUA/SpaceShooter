@@ -1,5 +1,5 @@
 local Entities = {}
-
+--ok
 function Entities.Load()
     screenNoPlayLeft = 100 --variable definissant la zone non jouable a gauche en pixels
     screenNoPlayRight = 100 --variable definissant la zone non jouable a droite en pixels
