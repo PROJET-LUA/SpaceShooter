@@ -1,4 +1,4 @@
-------VARIABLE------
+------VARIABLE------ salut
 --setFullScreen : change taille ecrant true or false
 SetFullScreen = false
 
@@ -36,7 +36,7 @@ end
 function love.draw()
     --full screen scale
     if (SetFullScreen) then love.graphics.scale(scale_x,scale_y) end
-     ----------------------------------------------------
+    ----------------------------------------------------
     backGround.draw()
 end
 

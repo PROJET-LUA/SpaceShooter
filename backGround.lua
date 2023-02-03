@@ -20,6 +20,7 @@ local backGround = {
 ------FONCTION UTILE------
 
 
+
 -----LOAD----- : ACTION DU JEU AU DEMARAGE
 function backGround.load()
 end
