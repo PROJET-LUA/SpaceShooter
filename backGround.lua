@@ -1,16 +1,14 @@
 
 ------VARIABLE------
---salut
--- coucou
 ------TABLEAU------
 local backGround = {}
 local img = love.graphics.newImage("images/star.png")
 local imgQuad = {}
 local listEtoile = {}
-local NB_STAR = 200
+local NB_STAR = 150
 local VX_MAX = 40
-local VY_MAX = 200
-local VT_MIN = 200
+local VY_MAX = 20
+local VT_MIN = 20
 local NB_STAR_QUAD = 9
 
 

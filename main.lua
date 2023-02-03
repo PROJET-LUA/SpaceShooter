@@ -9,6 +9,7 @@ SetFullScreen = false
 ------FONCTION KEYPRESSED------
 ------FONCTION MOUSEPRESSED------
 ------FONCTION UTILE------
+local shipe = require("shipe")
 local backGround = require("backGround")
 local myGame = require("game")
 
@@ -21,12 +22,14 @@ function love.load()
         scale_y = screenHeight / 600
     end
     backGround.load()
+    shipe.load()
     myGame.Load()
 end
 
 -----UPDATE----- : ACTION DU JEU A CHAQUE FRAME  
 function love.update(dt)
     backGround.update(dt)
+    shipe.update(dt)
 
     -----------------------------------
     if love.mouse.isDown(1) then
@@ -42,6 +45,7 @@ function love.draw()
     if (SetFullScreen) then love.graphics.scale(scale_x,scale_y) end
     ----------------------------------------------------
     backGround.draw()
+    shipe.draw()
     myGame.Draw()
 end
 
