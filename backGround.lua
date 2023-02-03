@@ -1,5 +1,6 @@
 
 ------VARIABLE------
+--salut
 ------TABLEAU------
 local backGround = {}
 local img = love.graphics.newImage("images/star.png")
