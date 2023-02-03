@@ -1,7 +1,7 @@
 io.stdout:setvbuf('no')
 ------VARIABLE------
 --setFullScreen : change taille ecrant true or false
-SetFullScreen = false
+SetFullScreen = true
 
 ------TABLEAU------
 ------FONCTION LOAD------
