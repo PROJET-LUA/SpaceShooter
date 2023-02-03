@@ -5,10 +5,10 @@ function Entities.Load()
     screenNoPlayRight = 100 --variable definissant la zone non jouable a droite en pixels
     screenNoPlayTop = 0 --variable definissant la zone non jouable en haut en pixels
     screenNoPlayRight= 0 --variable definissant la zone non jouable en bas en pixels
-    ennemyTypes = 19 --nombre de types d'ennemis et de textures
-    bossTypes = 6
-    neutralTypes = 5 --nombre de types d'ennemis et de textures
-    bonusTypes = 5 --nombre de types d'ennemis et de textures
+    ennemyTypes = 19 --nombre d'entité differentes et de textures pour l'array
+    bossTypes = 6 --nombre d'entité differentes et de textures pour l'array
+    neutralTypes = 5 --nombre d'entité differentes et de textures pour l'array
+    bonusTypes = 5 --nombre d'entité differentes et de textures pour l'array
     createEntityTimer = 0
     ennemiesPerSecond = 5
     ennemies = {}
@@ -17,12 +17,13 @@ function Entities.Load()
     bosses = {}
     currentLevel = 1
     screenX = love.graphics.getWidth()
+    screenY = love.graphics.getHeight()
 end
 
 function Entities.CreateEntity(dt)
     createEntityTimer = createEntityTimer + dt
     if createEntityTimer * ennemiesPerSecond >= 1 then -- create a new enemy every 1 second
-        local entityType = math.random(1, 1)
+        local entityType = math.random(1, 2)
         if entityType == 1 then -- si une entite est generee, executer ce code
             local ennemy = {}
             ennemy.Width = 16 --largeur d'une entite en fonction de ennemyTypes--
@@ -31,18 +32,21 @@ function Entities.CreateEntity(dt)
             ennemy.CoordY = 1
             ennemy.Type = math.random(1, ennemyTypes)
             ennemy.Level = math.floor((currentLevel + 1) / 2 )
-            ennemy.Speed = currentLevel
-            local lastEnnemyIndex = #ennemies
-            ennemies[lastEnnemyIndex + 1] = ennemy
+            ennemy.Speed = 0.96 + currentLevel / 50 * 2
+            ennemy.LifeMax = math.floor(currentLevel / 10)
+            local lastEntityIndex = #ennemies
+            ennemies[lastEntityIndex + 1] = ennemy
         elseif entityType == 2 then
             local neutral = {}
-            neutral.Width = 8 --largeur d'une entite en fonction de neutralTypes--
-            neutral.Height = 8 --hauteur d'une entite en fonction de neutralTypes--
+            neutral.Width = 16 --largeur d'une entite en fonction de neutralTypes--
+            neutral.Height = 16 --hauteur d'une entite en fonction de neutralTypes--
             neutral.CoordX = math.random((screenNoPlayLeft + 1), ((screenX - screenNoPlayRight) - neutral.Width))
             neutral.CoordY = 1
-            neutral.Type = math.random(0, neutralTypes)
-            local lastNeutralIndex = #neutrals
-            neutrals[lastNeutralIndex + 1] = neutral
+            neutral.Type = math.random(1, neutralTypes)
+            neutral.Level = math.floor((currentLevel + 1) / 2 )
+            neutral.Speed = 0.96 + currentLevel / 50 * 2
+            local lastEntityIndex = #neutrals
+            neutrals[lastEntityIndex + 1] = neutral
         elseif entityType == 3 then
             local bonus = {}
             bonus.Width = 8 --largeur d'une entite en fonction de bonusTypes--
@@ -69,32 +73,48 @@ function Entities.CreateEntity(dt)
 end
 
 function Entities.Update(dt)
-    for i = 1, #ennemies do
-        ennemies[i].CoordY = ennemies[i].CoordY + (ennemies[i].Speed + 50) * dt
+    for i = #ennemies, 1, -1 do
+        if ennemies[i].CoordY >= screenY then
+            table.remove(ennemies, i)
+        else
+            ennemies[i].CoordY = ennemies[i].CoordY + ennemies[i].Speed * dt * 50
+        end
     end
-    for i = 1, #neutrals do
-        neutrals[i].CoordY = neutrals[i].CoordY + (neutrals[i].Speed + 50) * dt
+    for i = #neutrals, 1, -1 do
+        if neutrals[i].CoordY == screenY then
+            table.remove(neutrals, i)
+        else
+            neutrals[i].CoordY = neutrals[i].CoordY + neutrals[i].Speed * dt * 25
+        end
     end
-    for i = 1, #bonuses do
-        bonuses[i].CoordY = bonuses[i].CoordY + (bonuses[i].Speed + 50) * dt
+    for i = #bonuses, 1, -1 do
+        if bonuses[i].CoordY == screenY then
+            table.remove(bonuses, i)
+        else
+            bonuses[i].CoordY = bonuses[i].CoordY + bonuses[i].Speed * dt * 50
+        end
     end
-    for i = 1, #bosses do
-        bosses[i].CoordY = bosses[i].CoordY + (bosses[i].Speed + 50) * dt
+    for i = #bosses, 1, -1 do
+        if bosses[i].CoordY == screenY then
+            table.remove(bosses, i)
+        else
+            bosses[i].CoordY = bosses[i].CoordY + (bosses[i].Speed + 50) * dt
+        end
     end
 end
 
 function Entities.Draw()
     local ennemyTexturePack = love.graphics.newImage("images/ennemy.png")
-    local bossTexturePack = love.graphics.newImage("images/boss.png")
+    local neutralTexturePack = love.graphics.newImage("images/neutral.png")
     for i = 1, #ennemies do
-        local currentEnnemy = ennemies[i]
-        local ennemyQuad = love.graphics.newQuad((currentEnnemy.Type - 1) * 16, (currentEnnemy.Level - 1)*16, 16, 16, 304, 400)
-        love.graphics.draw(ennemyTexturePack, ennemyQuad, currentEnnemy.CoordX, currentEnnemy.CoordY, 0, 1, 1)
+        local currentEntity = ennemies[i]
+        local entityQuad = love.graphics.newQuad((currentEntity.Type - 1) * 16, (currentEntity.Level - 1)*16, 16, 16, 304, 400)
+        love.graphics.draw(ennemyTexturePack, entityQuad, currentEntity.CoordX, currentEntity.CoordY, 0, 1, 1)
     end
-    for i = 1, #bosses do
-        local currentBoss = bosses[i]
-        local bossQuad = love.graphics.newQuad(0, (currentBoss.Type - 1)*16, 16, 16, 16, 96)
-        love.graphics.draw(bossTexturePack, bossQuad, currentBoss.CoordX, currentBoss.CoordY, 0, 1.5, 1.5)
+    for i = 1, #neutrals do
+        local currentEntity = neutrals[i]
+        local entityQuad = love.graphics.newQuad(0, (currentEntity.Type - 1)*16, 16, 16, 16, 80)
+        love.graphics.draw(neutralTexturePack, entityQuad, currentEntity.CoordX, currentEntity.CoordY, 0, 1, 1)
     end
 end
 
