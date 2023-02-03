@@ -20,6 +20,7 @@ function love.load()
         scale_x = screenWidth / 800
         scale_y = screenHeight / 600
     end
+    backGround.load()
     myGame.Load()
 end
 
@@ -39,7 +40,7 @@ end
 function love.draw()
     --full screen scale
     if (SetFullScreen) then love.graphics.scale(scale_x,scale_y) end
-     ----------------------------------------------------
+    ----------------------------------------------------
     backGround.draw()
     myGame.Draw()
 end
