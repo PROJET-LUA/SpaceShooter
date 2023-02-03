@@ -3,8 +3,8 @@
 ------VARIABLE------
 ------TABLEAU------
 local shipe = {
-    x = 400, 
-    y = 300,
+    x = 400,
+    y = 500,
     angle = -90,
     speed = 3,
     img = love.graphics.newImage("images/ship.png"),
@@ -65,11 +65,8 @@ end
 function shipe.draw()
     love.graphics.draw(shipe.img, shipe.x, shipe.y, math.rad(shipe.angle), 1, 1, shipe.img:getWidth()/2, shipe.img:getHeight()/2)
 
-
-
     if shipe.engineOn == true then
-        love.graphics.draw(shipe.imgEngine, shipe.x, shipe.y,
-        math.rad(shipe.angle), 1, 1, shipe.imgEngine:getWidth()/2, shipe.imgEngine:getHeight()/2)
+        love.graphics.draw(shipe.imgEngine, shipe.x, shipe.y,math.rad(shipe.angle), 1, 1, shipe.imgEngine:getWidth()/2, shipe.imgEngine:getHeight()/2)
     end
 end
 
@@ -77,7 +74,7 @@ end
 
 -----KEYPRESSED----- : ACTION DU JOUEUR CLAVIER
 function shipe.keypressed(key)
-    print(key) 
+    print(key)
 end
 
 -----MOUSEPRESSED----- : ACTION DU JOUEUR SOURIS

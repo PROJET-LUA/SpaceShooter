@@ -23,7 +23,7 @@ end
 function Entities.CreateEntity(dt)
     createEntityTimer = createEntityTimer + dt
     if createEntityTimer * ennemiesPerSecond >= 1 then -- create a new enemy every 1 second
-        local entityType = math.random(1, 3)
+        local entityType = math.random(1, 2)
         if entityType == 1 then -- si une entite est generee, executer ce code
             local ennemy = {}
             ennemy.Width = 16 --largeur d'une entite en fonction de ennemyTypes--
@@ -113,7 +113,7 @@ end
 function Entities.Draw()
     local ennemyTexturePack = love.graphics.newImage("images/ennemy.png")
     local neutralTexturePack = love.graphics.newImage("images/neutral.png")
-    local weaponTexturePack = love.graphics.newImage("weapons/neutral.png")
+    --local weaponTexturePack = love.graphics.newImage("weapons/neutral.png")
     for i = 1, #ennemies do
         local currentEntity = ennemies[i]
         local entityQuad = love.graphics.newQuad((currentEntity.Type - 1) * 16, (currentEntity.Level - 1)*16, 16, 16, 304, 400)

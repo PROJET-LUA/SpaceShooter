@@ -4,10 +4,11 @@ local backGround = {}
 local img = love.graphics.newImage("images/star.png")
 local imgQuad = {}
 local listEtoile = {}
-local NB_STAR = 150
-local VX_MAX = 40
-local VY_MAX = 20
-local VT_MIN = 20
+local NB_STAR = 200 --Nombre d'étoile
+local TAILLE_STAR = 0.5 --Taille d'étoile
+local VX_MAX = 22 --Vitesse maxX d'étoile 
+local VY_MAX = 40 --Vitesse maxY d'étoile 
+local VT_MIN = 2 --Vitesse min d'étoile 
 local NB_STAR_QUAD = 9
 
 
@@ -67,7 +68,7 @@ function backGround.draw()
     for i = #listEtoile, 1, -1 do
         local s = listEtoile[i]
 
-        love.graphics.draw(img,imgQuad[s.quad],s.x,s.y)
+        love.graphics.draw(img,imgQuad[s.quad],s.x,s.y,0, TAILLE_STAR)
     end    
     love.graphics.rectangle("line", 200,0,400,600)
 end
