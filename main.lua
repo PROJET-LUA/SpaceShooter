@@ -1,4 +1,4 @@
-------VARIABLE------ salut
+------VARIABLE------
 --setFullScreen : change taille ecrant true or false
 SetFullScreen = false
 
@@ -19,6 +19,7 @@ function love.load()
         scale_x = screenWidth / 800
         scale_y = screenHeight / 600
     end
+    backGround.load()
     myGame.Load()
 end
 
