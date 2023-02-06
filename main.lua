@@ -1,4 +1,7 @@
 io.stdout:setvbuf('no')
+
+--Empèche love de filtrer les contours de l'image quand elle est redimensionnées (pixel art)
+love.graphics.setDefaultFilter("nearest")
 ------VARIABLE------
 --setFullScreen : change taille ecrant true or false
 SetFullScreen = true
