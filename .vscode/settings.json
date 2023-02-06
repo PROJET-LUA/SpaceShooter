@@ -1,6 +1,10 @@
 {
     "Lua.diagnostics.globals": [
         "love",
+        "neutralTexturePack",
+        "weaponTexturePack",
+        "weaponsProperties",
+        "ennemyTexturePack"
     ],
     "Lua.runtime.version": "LuaJIT",
     "Lua.runtime.special": [],
