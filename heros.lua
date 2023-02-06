@@ -12,30 +12,6 @@ listeAliens = {}
 
 sonShoot = love.audio.newSource("sons/shoot.wav", "static")
 
--- createAliens() permet de créé nimporte quel "aliens" du dossier images en appelant juste son nom 
-function createAliens(pType, pX, pY)
-
-    local nomImg = ""
-    if pType == 1 then
-        nomImg = "enemy1"
-    elseif pType == 2 then
-        nomImg = "enemy2"
-    end
-        local alien = createSprite(nomImg, pX, pY)
-    if pType == 1 then
-        alien.vy = 2
-        alien.vx = 0
-    elseif pType == 2 then
-        alien.vy = 2
-        local direction = math.random(1,2)
-        if direction == 1 then
-        alien.vx = 1
-        else 
-            alien.vx = -1
-        end
-    end
-        table.insert(listeAliens, alien)
-end
 
 -- createSprite() permet de créé nimporte quel "sprite" du dossier images en appelant juste son nom 
 function createSprite(pNomImg, pX, pY)
@@ -60,12 +36,6 @@ function startGame()
     -- place le hero
     heros.x = larg/2
     heros.y = haut - (heros.h*2)
-
-    -- création des aliens 
-    createAliens(1, larg/2, 100)
-    createAliens(2, larg/2, 50)
-    createAliens(2, larg/2, 120)
-
 end
 ------FONCTION UPDATE------
 ------FONCTION DRAW------
