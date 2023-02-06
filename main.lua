@@ -1,4 +1,5 @@
 io.stdout:setvbuf('no')
+--Empèche love de filtrer les contours de l'image quand elle est redimensionnées (pixel art)
 love.graphics.setDefaultFilter("nearest")
 ------VARIABLE------
 --setFullScreen : change taille ecrant true or false
@@ -10,7 +11,7 @@ SetFullScreen = true
 ------FONCTION KEYPRESSED------
 ------FONCTION MOUSEPRESSED------
 ------FONCTION UTILE------
-local shipe = require("shipe")
+local heros = require("heros")
 local backGround = require("backGround")
 local myGame = require("game")
 
@@ -23,14 +24,14 @@ function love.load()
         scale_y = screenHeight / 600
     end
     backGround.load()
-    shipe.load()
+    heros.load()
     myGame.Load()
 end
 
 -----UPDATE----- : ACTION DU JEU A CHAQUE FRAME  
 function love.update(dt)
     backGround.update(dt)
-    shipe.update(dt)
+    heros.update(dt)
 
     -----------------------------------
     if love.mouse.isDown(1) then
@@ -46,7 +47,7 @@ function love.draw()
     if (SetFullScreen) then love.graphics.scale(scale_x,scale_y) end
     ----------------------------------------------------
     backGround.draw()
-    shipe.draw()
+    heros.draw()
     myGame.Draw()
 end
 
@@ -54,6 +55,7 @@ end
 
 -----KEYPRESSED----- : ACTION DU JOUEUR CLAVIER
 function love.keypressed(key)
+    heros.keypressed(key)
     print(key)
 end
 
