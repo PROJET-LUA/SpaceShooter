@@ -26,7 +26,7 @@ function createStat()
     if etoile.x > 400 then
         etoile.vx = math.random(0,VX_MAX)
     else
-        etoile.vx = - math.random(VX_MAX,0) 
+        etoile.vx = - math.random(VX_MAX,0)
     end
 
     table.insert(listEtoile, etoile)
