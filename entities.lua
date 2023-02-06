@@ -113,7 +113,7 @@ end
 function Entities.Draw()
     local ennemyTexturePack = love.graphics.newImage("images/ennemy.png")
     local neutralTexturePack = love.graphics.newImage("images/neutral.png")
-    --local weaponTexturePack = love.graphics.newImage("weapons/neutral.png")
+    --local weaponTexturePack = love.graphics.newImage("images/weapon.png")
     for i = 1, #ennemies do
         local currentEntity = ennemies[i]
         local entityQuad = love.graphics.newQuad((currentEntity.Type - 1) * 16, (currentEntity.Level - 1)*16, 16, 16, 304, 400)
