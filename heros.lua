@@ -2,12 +2,10 @@
 ------TABLEAU------
 heros = {}
 
-math.randomseed(love.timer.getTime())
 
 --liste d'éléments
 listeSprites = {}
 listeTirs = {}
-listeAliens = {}
 
 
 sonShoot = love.audio.newSource("sons/shoot.wav", "static")
@@ -60,7 +58,7 @@ end
 
 -----UPDATE----- : ACTION DU JEU A CHAQUE FRAME  
 function heros.update(dt)
-    local n 
+    local n
 
     -- pour chaque listeTirs, on fait quelque chose après...
     for n = #listeTirs, 1, -1 do
@@ -73,21 +71,7 @@ function heros.update(dt)
             table.remove(listeTirs, n)
         end
     end
-    -- traitement des aliens
-    for n = #listeAliens, 1, -1 do
-        local alien = listeAliens[n]
-
-        alien.x = alien.x + alien.vx
-        alien.y = alien.y + alien.vy
-
-        if alien.y > haut then
-            alien.supr = true
-            table.remove(listeAliens, n)
-        end
-    end
-
-
-
+    
 
     -- purge des listeSprites à suprimer 
     for n = #listeSprites, 1, -1 do
@@ -129,7 +113,7 @@ function heros.draw()
         love.graphics.draw(s.img, s.x, s.y, 0, 2, 2, s.l/2, s.h/2)
     end
     -- afficher le nombre de listeTirs et le nombre de listeSprites actuel à l'écrant
-    love.graphics.print("Nombre de listeTirs : "..#listeTirs.." Nombre de listeSprites : "..#listeSprites.." Nombre d'aliens : "..#listeAliens, 0, 0)
+    love.graphics.print("Nombre de listeTirs : "..#listeTirs.." Nombre de listeSprites : "..#listeSprites, 0, 0)
 
 end
 
