@@ -103,14 +103,14 @@ end
 
 
 
+    -- pour chaque listeSprites dans le tableau de listeSprites, on le dessine
+    local n
 
 -----DRAW----- : DESSINE CE QUE TU VOIS A L'ECRAN
 function heros.draw()
-    -- pour chaque listeSprites dans le tableau de listeSprites, on le dessine
-    local n
     for n = 1, #listeSprites do
-        local s = listeSprites[n]
-        love.graphics.draw(s.img, s.x, s.y, 0, 2, 2, s.l/2, s.h/2)
+        local localSprite = listeSprites[n]
+        love.graphics.draw(localSprite.img, localSprite.x, localSprite.y, 0, 2, 2, localSprite.l/2, localSprite.h/2)
     end
     -- afficher le nombre de listeTirs et le nombre de listeSprites actuel à l'écrant
     love.graphics.print("Nombre de listeTirs : "..#listeTirs.." Nombre de listeSprites : "..#listeSprites, 0, 0)

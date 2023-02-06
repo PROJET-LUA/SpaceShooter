@@ -139,8 +139,8 @@ function Entities.CreateEntity(dt)
         local entityType = math.random(1, totalRatio)
         if entityType <= ennemyRatio then -- si une entite est generee, executer ce code
             local ennemy = {}
-            ennemy.Width = 16 --largeur d'une entite en fonction de ennemyTypes--
-            ennemy.Height = 16 --hauteur d'une entite en fonction de ennemyTypes--
+            ennemy.Width = 32 --largeur d'une entite en fonction de ennemyTypes--
+            ennemy.Height = 32 --hauteur d'une entite en fonction de ennemyTypes--
             ennemy.CoordX = math.random((sideScreenSize + 1), (screenX - sideScreenSize - ennemy.Width))
             ennemy.CoordY = 1
             ennemy.Type = math.random(1, ennemyTypes)
@@ -165,8 +165,8 @@ function Entities.CreateEntity(dt)
             neutrals[lastEntityIndex + 1] = neutral
         else
             local bonus = {}
-            bonus.Width = 16 --largeur d'une entite en fonction de bonusTypes--
-            bonus.Height = 16 --hauteur d'une entite en fonction de bonusTypes--
+            bonus.Width = 32 --largeur d'une entite en fonction de bonusTypes--
+            bonus.Height = 32 --hauteur d'une entite en fonction de bonusTypes--
             bonus.CoordX = math.random((sideScreenSize + 1), (screenX - sideScreenSize - bonus.Width))
             bonus.CoordY = 1
             bonus.Type = math.random(1, bonusTypes)
@@ -183,34 +183,57 @@ function Entities.CreateEntity(dt)
 end
 
 function Entities.Update(dt)
+
     for i = #ennemies, 1, -1 do
         if ennemies[i].CoordY >= screenY then
             table.remove(ennemies, i)
+        elseif heros.x - 58 >= ennemies[i].CoordX and heros.x <= ennemies[i].CoordX + ennemies[i].Width then
+            if heros.y - 50 >= ennemies[i].CoordY and heros.y <= ennemies[i].CoordY + ennemies[i].Height then
+                table.remove(ennemies, i)
+                print("TOUCHE!")
+            else
+                ennemies[i].CoordY = ennemies[i].CoordY + ennemies[i].Speed * dt * 50
+            end
         else
             ennemies[i].CoordY = ennemies[i].CoordY + ennemies[i].Speed * dt * 50
         end
     end
     for i = #neutrals, 1, -1 do
-        if neutrals[i].CoordY == screenY then
+        if neutrals[i].CoordY >= screenY then
             table.remove(neutrals, i)
+        elseif heros.x - 58 >= neutrals[i].CoordX and heros.x <= neutrals[i].CoordX + neutrals[i].Width then
+            if heros.y - 50 >= neutrals[i].CoordY and heros.y <= neutrals[i].CoordY + neutrals[i].Height then
+                table.remove(neutrals, i)
+                print("BOOM!")
+            else
+                neutrals[i].CoordY = neutrals[i].CoordY + neutrals[i].Speed * dt * 50
+            end
         else
             neutrals[i].CoordY = neutrals[i].CoordY + neutrals[i].Speed * dt * 50
         end
     end
     for i = #bonuses, 1, -1 do
-        if bonuses[i].CoordY == screenY then
+        if bonuses[i].CoordY >= screenY then
             table.remove(bonuses, i)
+        elseif heros.x - 58 >= bonuses[i].CoordX and heros.x <= bonuses[i].CoordX + bonuses[i].Width then
+            if heros.y - 50 >= bonuses[i].CoordY and heros.y <= bonuses[i].CoordY + bonuses[i].Height then
+                table.remove(bonuses, i)
+                print("BONUS!")
+            else
+                bonuses[i].CoordY = bonuses[i].CoordY + bonuses[i].Speed * dt * 50
+            end
         else
             bonuses[i].CoordY = bonuses[i].CoordY + bonuses[i].Speed * dt * 50
         end
     end
-    for i = #bosses, 1, -1 do
-        if bosses[i].CoordY == screenY then
-            table.remove(bosses, i)
-        else
-            bosses[i].CoordY = bosses[i].CoordY + (bosses[i].Speed + 50) * dt
-        end
-    end
+
+    --for i = #bosses, 1, -1 do
+    --    if bosses[i].CoordY == screenY then
+    --        table.remove(bosses, i)
+    --    else
+    --        bosses[i].CoordY = bosses[i].CoordY + (bosses[i].Speed + 50) * dt
+    --    end
+    --end
 end
 
 function Entities.Draw()
