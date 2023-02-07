@@ -120,10 +120,10 @@ function heros.update(dt)
     end
 
     -- définir les touche de deplacement du hero
-    if love.keyboard.isDown("right") and heros.x < larg then
+    if love.keyboard.isDown("right") and heros.x < 600 then
         heros.x = heros.x + 2
     end
-    if love.keyboard.isDown("left") and heros.x > 0 then
+    if love.keyboard.isDown("left") and heros.x > 200 then
         heros.x = heros.x - 2
 
     end
@@ -131,7 +131,7 @@ function heros.update(dt)
         heros.y = heros.y - 2
 
     end
-    if love.keyboard.isDown("down") and heros.y < haut then
+    if love.keyboard.isDown("down") and heros.y < 600 then
         heros.y = heros.y + 2
 
     end
