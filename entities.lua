@@ -27,7 +27,7 @@ function Entities.Load()
     neutrals = {}
     bonuses = {}
     bosses = {}
-    currentLevel = 1
+    currentLevel = 40
 
 
     ennemyTexturePack = love.graphics.newImage("images/ennemy.png")
@@ -46,8 +46,8 @@ function Entities.Load()
                             Proj = true,
                             Beam = false,
                             Homing = false,
-                            FireQty = {1, 1, 1},
-                            FireAngle = {0, 0, 0},
+                            FireQty = math.floor((currentLevel - 1) / 5) + 1, --hp range from 1 to 10),
+                            FireAngle = 1,
                             FireBurst = {1, 1, 1},
                             Cooldown = {1, 1, 1},
                             ProjSpeed = {200, 300, 400},
