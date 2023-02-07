@@ -33,6 +33,7 @@ function createSprite(pNomImg, pX, pY)
 
     return sprite
 end
+
 ------FONCTION LOAD------
 
 -- startGame() au demagarge du jeu place le hero et crée les aliens
@@ -56,6 +57,13 @@ end
 ------FONCTION MOUSEPRESSED------
 ------FONCTION UTILE------
 
+function collideTir(tableprojectil, tableentites)
+    if (tableentites.CoordX + tableentites.Width) >= (tableprojectil.x) and tableentites.CoordX <= (tableprojectil.x) and
+    (tableentites.CoordY + tableentites.Height) >= (tableprojectil.y) and tableentites.CoordY <= (tableprojectil.y) then
+        return true
+    else return false
+    end
+end
 -----LOAD----- : ACTION DU JEU AU DEMARAGE
 function heros.load()
 
@@ -84,6 +92,12 @@ function heros.update(dt)
         tir.y = tir.y + tir.vy
 
         -- vérifier si une entités touche le heros
+        for i = #bonuses, 1, -1 do
+
+            if collideTir(tir, bonuses[i]) then
+                table.remove(bonuses, i)
+            end
+        end
 
 
         -- vérifier si le heros touche une entités 
@@ -106,10 +120,10 @@ function heros.update(dt)
     end
 
     -- définir les touche de deplacement du hero
-    if love.keyboard.isDown("right") and heros.x < larg then
+    if love.keyboard.isDown("right") and heros.x < 600 then
         heros.x = heros.x + 2
     end
-    if love.keyboard.isDown("left") and heros.x > 0 then
+    if love.keyboard.isDown("left") and heros.x > 200 then
         heros.x = heros.x - 2
 
     end
@@ -117,7 +131,7 @@ function heros.update(dt)
         heros.y = heros.y - 2
 
     end
-    if love.keyboard.isDown("down") and heros.y < haut then
+    if love.keyboard.isDown("down") and heros.y < 600 then
         heros.y = heros.y + 2
 
     end

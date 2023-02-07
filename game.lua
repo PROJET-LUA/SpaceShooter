@@ -1,5 +1,11 @@
 local Game = {}
 
+--ennemiesPerSecond = 1 --nombre d'entites par seconde
+--ennemyRatio = 0
+--neutralRatio = 0
+--bonusRatio = 1
+
+
 local myEntities = require("entities")
 local heros = require("heros")
 local backGround = require("backGround")
