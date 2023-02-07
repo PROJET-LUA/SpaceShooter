@@ -4,7 +4,11 @@
         "neutralTexturePack",
         "weaponTexturePack",
         "weaponsProperties",
-        "ennemyTexturePack"
+        "ennemyTexturePack",
+        "ennemies",
+        "neutrals",
+        "bonuses",
+        "bosses"
     ],
     "Lua.runtime.version": "LuaJIT",
     "Lua.runtime.special": [],
