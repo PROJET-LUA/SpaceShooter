@@ -188,16 +188,11 @@ function Entities.CreateEntity(dt)
     end
 end
 
-function Entities.Collide(quad1, quad2)
-    if (quad1==quad2) then
-        return false
-    else
-        local quad1X, quad1Y, quad1Width, quad1Height = quad1:getViewport()
-        local quad2X, quad2Y, quad2Width, quad2Height = quad2:getViewport()
-        if (math.abs(quad1X - quad2X) < quad1Width + quad2Width) then
-            if (math.abs(quad1Y - quad2Y) < quad1Height + quad2Height) then
-                return true
-            end
+function Entities.Collide(quad1)
+    local quad1X, quad1Y, quad1Width, quad1Height = quad1:getViewport()
+    if (math.abs(quad1X - herosX) < quad1Width + quad2Width) then
+        if (math.abs(quad1Y - quad2Y) < quad1Height + quad2Height) then
+            return true
         end
     end
 end
