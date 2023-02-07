@@ -203,17 +203,16 @@ function Entities.Collide(quad1, quad2)
 end
 
 function Entities.Update(dt)
-
     for i = #ennemies, 1, -1 do
         if ennemies[i].CoordY >= screenY then
             table.remove(ennemies, i)
-        elseif heros.x - 58 >= ennemies[i].CoordX and heros.x <= ennemies[i].CoordX + ennemies[i].Width then
-            if heros.y - 50 >= ennemies[i].CoordY and heros.y <= ennemies[i].CoordY + ennemies[i].Height then
-                table.remove(ennemies, i)
-                print("TOUCHE!")
-            else
-                ennemies[i].CoordY = ennemies[i].CoordY + ennemies[i].Speed * dt * 50
-            end
+       -- elseif heros.x - 58 >= ennemies[i].CoordX and heros.x <= ennemies[i].CoordX + ennemies[i].Width then
+--            if heros.y - 50 >= ennemies[i].CoordY and heros.y <= ennemies[i].CoordY + ennemies[i].Height then
+  --              table.remove(ennemies, i)
+  --              print("TOUCHE!")
+   --         else
+    --            ennemies[i].CoordY = ennemies[i].CoordY + ennemies[i].Speed * dt * 50
+   --         end
         else
             ennemies[i].CoordY = ennemies[i].CoordY + ennemies[i].Speed * dt * 50
         end
@@ -221,13 +220,13 @@ function Entities.Update(dt)
     for i = #neutrals, 1, -1 do
         if neutrals[i].CoordY >= screenY then
             table.remove(neutrals, i)
-        elseif heros.x - 58 >= neutrals[i].CoordX and heros.x <= neutrals[i].CoordX + neutrals[i].Width then
-            if heros.y - 50 >= neutrals[i].CoordY and heros.y <= neutrals[i].CoordY + neutrals[i].Height then
-                table.remove(neutrals, i)
-                print("BOOM!")
-            else
+    --    elseif heros.x - 58 >= neutrals[i].CoordX and heros.x <= neutrals[i].CoordX + neutrals[i].Width then
+      --      if heros.y - 50 >= neutrals[i].CoordY and heros.y <= neutrals[i].CoordY + neutrals[i].Height then
+         --       table.remove(neutrals, i)
+         --       print("BOOM!")
+         --   else
                 neutrals[i].CoordY = neutrals[i].CoordY + neutrals[i].Speed * dt * 50
-            end
+         --   end
         else
             neutrals[i].CoordY = neutrals[i].CoordY + neutrals[i].Speed * dt * 50
         end
@@ -235,13 +234,13 @@ function Entities.Update(dt)
     for i = #bonuses, 1, -1 do
         if bonuses[i].CoordY >= screenY then
             table.remove(bonuses, i)
-        elseif heros.x - 58 >= bonuses[i].CoordX and heros.x <= bonuses[i].CoordX + bonuses[i].Width then
-            if heros.y - 50 >= bonuses[i].CoordY and heros.y <= bonuses[i].CoordY + bonuses[i].Height then
-                table.remove(bonuses, i)
-                print("BONUS!")
-            else
-                bonuses[i].CoordY = bonuses[i].CoordY + bonuses[i].Speed * dt * 50
-            end
+       -- elseif heros.x - 58 >= bonuses[i].CoordX and heros.x <= bonuses[i].CoordX + bonuses[i].Width then
+       --     if heros.y - 50 >= bonuses[i].CoordY and heros.y <= bonuses[i].CoordY + bonuses[i].Height then
+           --     table.remove(bonuses, i)
+           --     print("BONUS!")
+           -- else
+           --     bonuses[i].CoordY = bonuses[i].CoordY + bonuses[i].Speed * dt * 50
+           -- end
         else
             bonuses[i].CoordY = bonuses[i].CoordY + bonuses[i].Speed * dt * 50
         end

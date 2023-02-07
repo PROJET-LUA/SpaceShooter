@@ -11,8 +11,6 @@ SetFullScreen = true
 ------FONCTION KEYPRESSED------
 ------FONCTION MOUSEPRESSED------
 ------FONCTION UTILE------
-local heros = require("heros")
-local backGround = require("backGround")
 local myGame = require("game")
 
 -----LOAD----- : ACTION DU JEU AU DEMARAGE
@@ -23,15 +21,11 @@ function love.load()
         scale_x = screenWidth / 800
         scale_y = screenHeight / 600
     end
-    backGround.load()
-    heros.load()
     myGame.Load()
 end
 
 -----UPDATE----- : ACTION DU JEU A CHAQUE FRAME  
 function love.update(dt)
-    backGround.update(dt)
-    heros.update(dt)
     myGame.Update(dt)
     -----------------------------------
     if love.mouse.isDown(1) then
@@ -45,8 +39,6 @@ function love.draw()
     --full screen scale
     if (SetFullScreen) then love.graphics.scale(scale_x,scale_y) end
     ----------------------------------------------------
-    backGround.draw()
-    heros.draw()
     myGame.Draw()
 end
 
@@ -54,7 +46,7 @@ end
 
 -----KEYPRESSED----- : ACTION DU JOUEUR CLAVIER
 function love.keypressed(key)
-    heros.keypressed(key)
+    myGame.keypressed(key)
     print(key)
 end
 
