@@ -92,10 +92,10 @@ function heros.update(dt)
         tir.y = tir.y + tir.vy
 
         -- vérifier si une entités touche le heros
-        for i = #bonuses, 1, -1 do
+        for i = #ennemies, 1, -1 do
 
-            if collideTir(tir, bonuses[i]) then
-                table.remove(bonuses, i)
+            if collideTir(tir, ennemies[i]) then
+                table.remove(ennemies, i)
             end
         end
 
