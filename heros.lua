@@ -1,10 +1,6 @@
 ------VARIABLE------
 
 -- variable global  
-herosX = sprite.x
-herosY = sprite.y
-herosLong = sprite.l
-herosHaut = sprite.h
 
 
 
@@ -30,6 +26,10 @@ function createSprite(pNomImg, pX, pY)
         sprite.img = love.graphics.newImage("images/"..pNomImg..".png")
         sprite.l = sprite.img:getWidth()
         sprite.h = sprite.img:getHeight()
+        herosX = sprite.x
+        herosY = sprite.y
+        herosLong = sprite.l
+        herosHaut = sprite.h
 
     
     table.insert(listeSprites, sprite)
