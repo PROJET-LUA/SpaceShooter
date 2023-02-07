@@ -3,7 +3,7 @@ io.stdout:setvbuf('no')
 love.graphics.setDefaultFilter("nearest")
 ------VARIABLE------
 --setFullScreen : change taille ecrant true or false
-SetFullScreen = false
+SetFullScreen = true
 
 ------TABLEAU------
 ------FONCTION LOAD------
