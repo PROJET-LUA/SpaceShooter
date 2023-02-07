@@ -4,7 +4,12 @@
         "neutralTexturePack",
         "weaponTexturePack",
         "weaponsProperties",
-        "ennemyTexturePack"
+        "ennemyTexturePack",
+        "heroLong",
+        "herosX",
+        "herosY",
+        "herosLong",
+        "herosHaut"
     ],
     "Lua.runtime.version": "LuaJIT",
     "Lua.runtime.special": [],
