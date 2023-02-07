@@ -1,6 +1,12 @@
 ------VARIABLE------
+
+-- variable global  
+
+
+
 ------TABLEAU------
 heros = {}
+
 
 
 --liste d'éléments
@@ -67,6 +73,9 @@ function heros.load()
     -- definir heros pour créé un listeSprites suivant larg et haut
     heros = createSprite("heros", larg/2, haut/2)
 
+    local herosImage = love.graphics.newImage("images/heros.png")
+    heros.Width = herosImage:getWidth()
+    heros.Height = herosImage:getHeight()
     startGame()
 
 end
@@ -105,16 +114,19 @@ function heros.update(dt)
 
     -- définir les touche de deplacement du hero
     if love.keyboard.isDown("right") and heros.x < larg then
-        heros.x = heros.x + 4
+        heros.x = heros.x + 2
     end
     if love.keyboard.isDown("left") and heros.x > 0 then
-        heros.x = heros.x - 4
+        heros.x = heros.x - 2
+
     end
     if love.keyboard.isDown("up") and heros.y > 0 then
-        heros.y = heros.y - 4
+        heros.y = heros.y - 2
+
     end
     if love.keyboard.isDown("down") and heros.y < haut then
-        heros.y = heros.y + 4
+        heros.y = heros.y + 2
+
     end
 
     

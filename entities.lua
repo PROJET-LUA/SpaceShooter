@@ -188,16 +188,11 @@ function Entities.CreateEntity(dt)
     end
 end
 
-function Entities.Collide(quad1, quad2)
-    if (quad1==quad2) then
-        return false
-    else
-        local quad1X, quad1Y, quad1Width, quad1Height = quad1:getViewport()
-        local quad2X, quad2Y, quad2Width, quad2Height = quad2:getViewport()
-        if (math.abs(quad1X - quad2X) < quad1Width + quad2Width) then
-            if (math.abs(quad1Y - quad2Y) < quad1Height + quad2Height) then
-                return true
-            end
+function Entities.Collide(quad1)
+    local quad1X, quad1Y, quad1Width, quad1Height = quad1:getViewport()
+    if (math.abs(quad1X - herosX) < quad1Width + herosLong) then
+        if (math.abs(quad1Y - herosY) < quad1Height + herosHaut) then
+            return true
         end
     end
 end
@@ -206,7 +201,7 @@ function Entities.Update(dt)
     for i = #ennemies, 1, -1 do
         if ennemies[i].CoordY >= screenY then
             table.remove(ennemies, i)
-       -- elseif heros.x - 58 >= ennemies[i].CoordX and heros.x <= ennemies[i].CoordX + ennemies[i].Width then
+       --elseif heros.x - 58 >= ennemies[i].CoordX and heros.x <= ennemies[i].CoordX + ennemies[i].Width then
 --            if heros.y - 50 >= ennemies[i].CoordY and heros.y <= ennemies[i].CoordY + ennemies[i].Height then
   --              table.remove(ennemies, i)
   --              print("TOUCHE!")
@@ -234,13 +229,12 @@ function Entities.Update(dt)
     for i = #bonuses, 1, -1 do
         if bonuses[i].CoordY >= screenY then
             table.remove(bonuses, i)
-       -- elseif heros.x - 58 >= bonuses[i].CoordX and heros.x <= bonuses[i].CoordX + bonuses[i].Width then
-       --     if heros.y - 50 >= bonuses[i].CoordY and heros.y <= bonuses[i].CoordY + bonuses[i].Height then
-           --     table.remove(bonuses, i)
-           --     print("BONUS!")
-           -- else
-           --     bonuses[i].CoordY = bonuses[i].CoordY + bonuses[i].Speed * dt * 50
-           -- end
+        elseif (bonuses[i].CoordX + bonuses[i].Width) >= (heros.x - heros.Width/2) and bonuses[i].CoordX <= (heros.x - heros.Width/2 + heros.Width) then
+            if (bonuses[i].CoordY + bonuses[i].Height) >= (heros.y - heros.Height/2) and bonuses[i].CoordY <= (heros.y - heros.Height/2 + heros.Height) then
+                table.remove(bonuses, i)
+            else
+                bonuses[i].CoordY = bonuses[i].CoordY + bonuses[i].Speed * dt * 50
+            end
         else
             bonuses[i].CoordY = bonuses[i].CoordY + bonuses[i].Speed * dt * 50
         end
