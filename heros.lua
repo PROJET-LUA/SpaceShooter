@@ -1,13 +1,4 @@
 ------VARIABLE------
-
--- variable global  
-herosX = sprite.x
-herosY = sprite.y
-herosLong = sprite.l
-herosHaut = sprite.h
-
-
-
 ------TABLEAU------
 heros = {}
 
@@ -36,6 +27,13 @@ function createSprite(pNomImg, pX, pY)
 
     return sprite
 end
+
+-- variable global  
+herosX = sprite.x
+herosY = sprite.y
+herosLong = sprite.l
+herosHaut = sprite.h
+
 ------FONCTION LOAD------
 
 -- startGame() au demagarge du jeu place le hero et crée les aliens
