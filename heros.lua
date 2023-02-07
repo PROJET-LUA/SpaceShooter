@@ -119,11 +119,11 @@ end
 
     
 
+    -- pour chaque listeSprites dans le tableau de listeSprites, on le dessine
+    local n
 
 -----DRAW----- : DESSINE CE QUE TU VOIS A L'ECRAN
 function heros.draw()
-    -- pour chaque listeSprites dans le tableau de listeSprites, on le dessine
-    local n
     for n = 1, #listeSprites do
         local s = listeSprites[n]
         love.graphics.draw(s.img, s.x, s.y, 0, 1, 1, s.l/2, s.h/2)

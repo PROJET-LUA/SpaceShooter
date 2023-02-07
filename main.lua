@@ -3,7 +3,7 @@ io.stdout:setvbuf('no')
 love.graphics.setDefaultFilter("nearest")
 ------VARIABLE------
 --setFullScreen : change taille ecrant true or false
-SetFullScreen = true
+SetFullScreen = false
 
 ------TABLEAU------
 ------FONCTION LOAD------
@@ -32,12 +32,11 @@ end
 function love.update(dt)
     backGround.update(dt)
     heros.update(dt)
-
+    myGame.Update(dt)
     -----------------------------------
     if love.mouse.isDown(1) then
         print(love.mouse.getPosition())
     end
-    myGame.Update(dt)
 end
 
 
