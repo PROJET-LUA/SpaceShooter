@@ -1,4 +1,13 @@
 ------VARIABLE------
+
+-- variable global  
+herosX = sprite.x
+herosY = sprite.y
+herosLong = sprite.l
+herosHaut = sprite.h
+
+
+
 ------TABLEAU------
 heros = {}
 
@@ -110,7 +119,7 @@ function heros.update(dt)
         heros.y = heros.y + 4
     end
 
-
+    
     -----------------------------------
     if love.mouse.isDown(1) then
         print(love.mouse.getPosition())
