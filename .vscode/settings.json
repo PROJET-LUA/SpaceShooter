@@ -9,7 +9,11 @@
         "herosX",
         "herosY",
         "herosLong",
-        "herosHaut"
+        "herosHaut",
+        "ennemies",
+        "neutrals",
+        "bonuses",
+        "bosses"
     ],
     "Lua.runtime.version": "LuaJIT",
     "Lua.runtime.special": [],
