@@ -190,8 +190,8 @@ end
 
 function Entities.Collide(quad1)
     local quad1X, quad1Y, quad1Width, quad1Height = quad1:getViewport()
-    if (math.abs(quad1X - herosX) < quad1Width + quad2Width) then
-        if (math.abs(quad1Y - quad2Y) < quad1Height + quad2Height) then
+    if (math.abs(quad1X - herosX) < quad1Width + herosLong) then
+        if (math.abs(quad1Y - herosY) < quad1Height + herosHaut) then
             return true
         end
     end
@@ -201,7 +201,7 @@ function Entities.Update(dt)
     for i = #ennemies, 1, -1 do
         if ennemies[i].CoordY >= screenY then
             table.remove(ennemies, i)
-       -- elseif heros.x - 58 >= ennemies[i].CoordX and heros.x <= ennemies[i].CoordX + ennemies[i].Width then
+       --elseif heros.x - 58 >= ennemies[i].CoordX and heros.x <= ennemies[i].CoordX + ennemies[i].Width then
 --            if heros.y - 50 >= ennemies[i].CoordY and heros.y <= ennemies[i].CoordY + ennemies[i].Height then
   --              table.remove(ennemies, i)
   --              print("TOUCHE!")
@@ -229,13 +229,13 @@ function Entities.Update(dt)
     for i = #bonuses, 1, -1 do
         if bonuses[i].CoordY >= screenY then
             table.remove(bonuses, i)
-       -- elseif heros.x - 58 >= bonuses[i].CoordX and heros.x <= bonuses[i].CoordX + bonuses[i].Width then
-       --     if heros.y - 50 >= bonuses[i].CoordY and heros.y <= bonuses[i].CoordY + bonuses[i].Height then
-           --     table.remove(bonuses, i)
-           --     print("BONUS!")
-           -- else
-           --     bonuses[i].CoordY = bonuses[i].CoordY + bonuses[i].Speed * dt * 50
-           -- end
+        elseif (math.abs(bonuses[i].CoordX - herosX) < bonuses[i].Width + herosLong) then
+            if (math.abs(bonuses[i].CoordY - herosY) < bonuses[i].Height + herosHaut) then
+                table.remove(bonuses, i)
+                print("BONUS!")
+            else
+                bonuses[i].CoordY = bonuses[i].CoordY + bonuses[i].Speed * dt * 50
+            end
         else
             bonuses[i].CoordY = bonuses[i].CoordY + bonuses[i].Speed * dt * 50
         end
