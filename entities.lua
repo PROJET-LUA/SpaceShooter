@@ -229,10 +229,9 @@ function Entities.Update(dt)
     for i = #bonuses, 1, -1 do
         if bonuses[i].CoordY >= screenY then
             table.remove(bonuses, i)
-        elseif (math.abs(bonuses[i].CoordX - herosX) < bonuses[i].Width + herosLong) then
-            if (math.abs(bonuses[i].CoordY - herosY) < bonuses[i].Height + herosHaut) then
+        elseif (bonuses[i].CoordX + bonuses[i].Width) >= (heros.x - heros.Width/2) and bonuses[i].CoordX <= (heros.x - heros.Width/2 + heros.Width) then
+            if (bonuses[i].CoordY + bonuses[i].Height) >= (heros.y - heros.Height/2) and bonuses[i].CoordY <= (heros.y - heros.Height/2 + heros.Height) then
                 table.remove(bonuses, i)
-                print("BONUS!")
             else
                 bonuses[i].CoordY = bonuses[i].CoordY + bonuses[i].Speed * dt * 50
             end
