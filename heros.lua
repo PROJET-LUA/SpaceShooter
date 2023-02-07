@@ -98,7 +98,12 @@ function heros.update(dt)
                 table.remove(ennemies, i)
             end
         end
+        for i = #neutrals, 1, -1 do
 
+            if collideTir(tir, neutrals[i]) then
+                table.remove(neutrals, i)
+            end
+        end
 
         -- vérifier si le heros touche une entités 
 
@@ -121,18 +126,18 @@ function heros.update(dt)
 
     -- définir les touche de deplacement du hero
     if love.keyboard.isDown("right") and heros.x < 600 then
-        heros.x = heros.x + 2
+        heros.x = heros.x + 1.3
     end
     if love.keyboard.isDown("left") and heros.x > 200 then
-        heros.x = heros.x - 2
+        heros.x = heros.x - 1.3
 
     end
     if love.keyboard.isDown("up") and heros.y > 0 then
-        heros.y = heros.y - 2
+        heros.y = heros.y - 1.3
 
     end
     if love.keyboard.isDown("down") and heros.y < 600 then
-        heros.y = heros.y + 2
+        heros.y = heros.y + 1.3
 
     end
 
