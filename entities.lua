@@ -16,8 +16,8 @@ function Entities.Load()
 
     createEntityTimer = 0 --timer pour creer une entite: ne pas changer
     ennemiesPerSecond = 1 --nombre d'entites par seconde
-    ennemyRatio = 3
-    neutralRatio = 6
+    ennemyRatio = 0
+    neutralRatio = 0
     bonusRatio = 1
     totalRatio = ennemyRatio + neutralRatio + bonusRatio
 
@@ -33,6 +33,12 @@ function Entities.Load()
     ennemyTexturePack = love.graphics.newImage("images/ennemy.png")
     neutralTexturePack = love.graphics.newImage("images/neutral.png")
     weaponTexturePack = love.graphics.newImage("images/weapon.png")
+    ennemiesProperties= {
+                            {
+
+                            }
+
+    }
     weaponsProperties = {
                             {
                             Name = "Gauss Canon",
@@ -48,7 +54,7 @@ function Entities.Load()
                             Energy = {10, 10, 10},
                             ShieldDmg = {0, 0, 0},
                             HullDmg = {5, 7, 10},
-                            Sprite = love.graphics.newQuad(0, 32, 32, 32, 192, 192)
+                            Quad = love.graphics.newQuad(0, 32, 32, 32, 192, 192)
                             },
                             {
                             Name = "Gatling Gun",
@@ -64,7 +70,7 @@ function Entities.Load()
                             Energy = {1, 1, 1},
                             ShieldDmg = {1, 1, 1},
                             HullDmg = {0, 0, 0},
-                            Sprite = love.graphics.newQuad(128, 64, 32, 32, 192, 192)
+                            Quad = love.graphics.newQuad(128, 64, 32, 32, 192, 192)
                             },
                             {
                             Name = "Laser Canon",
@@ -80,7 +86,7 @@ function Entities.Load()
                             Energy = {1, 1, 1},
                             ShieldDmg = {1, 1, 1},
                             HullDmg = {0, 0, 0},
-                            Sprite = love.graphics.newQuad(64, 64, 32, 32, 192, 192)
+                            Quad = love.graphics.newQuad(64, 64, 32, 32, 192, 192)
                             },
                             {
                             Name = "Torpedo",
@@ -96,7 +102,7 @@ function Entities.Load()
                             Energy = {1, 1, 1},
                             ShieldDmg = {0, 0, 0},
                             HullDmg = {3, 3, 3},
-                            Sprite = love.graphics.newQuad(0, 128, 32, 32, 192, 192)
+                            Quad = love.graphics.newQuad(0, 128, 32, 32, 192, 192)
                             },
                             {
                             Name = "Deathray",
@@ -112,7 +118,7 @@ function Entities.Load()
                             Energy = {1, 1, 1},
                             ShieldDmg = {1, 2, 3},
                             HullDmg = {0, 0, 0},
-                            Sprite = love.graphics.newQuad(32, 160, 32, 32, 192, 192)
+                            Quad = love.graphics.newQuad(32, 160, 32, 32, 192, 192)
                             },
                             {
                             Name = "Guided Missile",
@@ -128,7 +134,7 @@ function Entities.Load()
                             Energy = {2, 2, 2},
                             ShieldDmg = {0, 0, 0},
                             HullDmg = {5, 5, 5},
-                            Sprite = love.graphics.newQuad(96, 96, 32, 32, 192, 192)
+                            Quad = love.graphics.newQuad(96, 96, 32, 32, 192, 192)
                             }
                         }
 end
@@ -160,7 +166,7 @@ function Entities.CreateEntity(dt)
             neutral.Level = math.floor((currentLevel + 1) / 2 )
             neutral.Speed = (0.96 + currentLevel / 50 * 2) * 0.5
             neutral.LifeMax = neutral.Type
-            neutral.Life = neutral.LifeMax 
+            neutral.Life = neutral.LifeMax
             local lastEntityIndex = #neutrals
             neutrals[lastEntityIndex + 1] = neutral
         else
@@ -179,6 +185,20 @@ function Entities.CreateEntity(dt)
         end
         createEntityTimer = 0
     else
+    end
+end
+
+function Entities.Collide(quad1, quad2)
+    if (quad1==quad2) then
+        return false
+    else
+        local quad1X, quad1Y, quad1Width, quad1Height = quad1:getViewport()
+        local quad2X, quad2Y, quad2Width, quad2Height = quad2:getViewport()
+        if (math.abs(quad1X - quad2X) < quad1Width + quad2Width) then
+            if (math.abs(quad1Y - quad2Y) < quad1Height + quad2Height) then
+                return true
+            end
+        end
     end
 end
 
@@ -249,7 +269,7 @@ function Entities.Draw()
     end
     for i = 1, #bonuses do
         local currentEntity = bonuses[i]
-        love.graphics.draw(weaponTexturePack, weaponsProperties[currentEntity.Type].Sprite, currentEntity.CoordX, currentEntity.CoordY, 0, 1, 1)
+        love.graphics.draw(weaponTexturePack, weaponsProperties[currentEntity.Type].Quad, currentEntity.CoordX, currentEntity.CoordY, 0, 1, 1)
     end
 end
 
