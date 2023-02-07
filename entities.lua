@@ -16,8 +16,8 @@ function Entities.Load()
 
     createEntityTimer = 0 --timer pour creer une entite: ne pas changer
     ennemiesPerSecond = 1 --nombre d'entites par seconde
-    ennemyRatio = 0
-    neutralRatio = 0
+    ennemyRatio = 3
+    neutralRatio = 6
     bonusRatio = 1
     totalRatio = ennemyRatio + neutralRatio + bonusRatio
 
@@ -154,6 +154,7 @@ function Entities.CreateEntity(dt)
             ennemy.Speed = (0.96 + currentLevel / 50 * 2) * 1.00
             ennemy.LifeMax = math.floor((currentLevel - 1) / 5) + 1 --hp range from 1 to 10)
             ennemy.Life = ennemy.LifeMax
+            ennemy.Quad = love.graphics.newQuad((ennemy.Type - 1) * 16, (ennemy.Level - 1)*16, 16, 16, 304, 400)
             local lastEntityIndex = #ennemies
             ennemies[lastEntityIndex + 1] = ennemy
         elseif entityType > ennemyRatio and entityType <= ennemyRatio + neutralRatio then
@@ -167,6 +168,7 @@ function Entities.CreateEntity(dt)
             neutral.Speed = (0.96 + currentLevel / 50 * 2) * 0.5
             neutral.LifeMax = neutral.Type
             neutral.Life = neutral.LifeMax
+            neutral.Quad = love.graphics.newQuad(0, (neutral.Type - 1)*16, 16, 16, 16, 80)
             local lastEntityIndex = #neutrals
             neutrals[lastEntityIndex + 1] = neutral
         else
@@ -180,6 +182,7 @@ function Entities.CreateEntity(dt)
             bonus.Speed = (0.96 + currentLevel / 50 * 2) * 0.5
             bonus.LifeMax = 1
             bonus.Life = bonus.LifeMax
+            bonus.Quad = weaponsProperties[bonus.Type].Quad
             local lastEntityIndex = #bonuses
             bonuses[lastEntityIndex + 1] = bonus
         end
@@ -188,12 +191,12 @@ function Entities.CreateEntity(dt)
     end
 end
 
-function Entities.Collide(quad1)
-    local quad1X, quad1Y, quad1Width, quad1Height = quad1:getViewport()
-    if (math.abs(quad1X - herosX) < quad1Width + herosLong) then
-        if (math.abs(quad1Y - herosY) < quad1Height + herosHaut) then
-            return true
-        end
+function Entities.Collide(quad1, quad2)
+    if  (quad1.CoordX + quad1.Width) >= (quad2.x - quad2.Width/2) and quad1.CoordX <= (quad2.x - quad2.Width/2 + quad2.Width) and
+        (quad1.CoordY + quad1.Height) >= (quad2.y - quad2.Height/2) and quad1.CoordY <= (quad2.y - quad2.Height/2 + quad2.Height) then
+        return true
+    else
+        return false
     end
 end
 
@@ -201,13 +204,9 @@ function Entities.Update(dt)
     for i = #ennemies, 1, -1 do
         if ennemies[i].CoordY >= screenY then
             table.remove(ennemies, i)
-       --elseif heros.x - 58 >= ennemies[i].CoordX and heros.x <= ennemies[i].CoordX + ennemies[i].Width then
---            if heros.y - 50 >= ennemies[i].CoordY and heros.y <= ennemies[i].CoordY + ennemies[i].Height then
-  --              table.remove(ennemies, i)
-  --              print("TOUCHE!")
-   --         else
-    --            ennemies[i].CoordY = ennemies[i].CoordY + ennemies[i].Speed * dt * 50
-   --         end
+        elseif Entities.Collide(ennemies[i], heros) then
+            table.remove(ennemies, i)
+            print("BOOM!")
         else
             ennemies[i].CoordY = ennemies[i].CoordY + ennemies[i].Speed * dt * 50
         end
@@ -215,13 +214,9 @@ function Entities.Update(dt)
     for i = #neutrals, 1, -1 do
         if neutrals[i].CoordY >= screenY then
             table.remove(neutrals, i)
-    --    elseif heros.x - 58 >= neutrals[i].CoordX and heros.x <= neutrals[i].CoordX + neutrals[i].Width then
-      --      if heros.y - 50 >= neutrals[i].CoordY and heros.y <= neutrals[i].CoordY + neutrals[i].Height then
-         --       table.remove(neutrals, i)
-         --       print("BOOM!")
-         --   else
-                neutrals[i].CoordY = neutrals[i].CoordY + neutrals[i].Speed * dt * 50
-         --   end
+        elseif Entities.Collide(neutrals[i], heros) then
+            table.remove(neutrals, i)
+            print("BOOM!")
         else
             neutrals[i].CoordY = neutrals[i].CoordY + neutrals[i].Speed * dt * 50
         end
@@ -229,12 +224,9 @@ function Entities.Update(dt)
     for i = #bonuses, 1, -1 do
         if bonuses[i].CoordY >= screenY then
             table.remove(bonuses, i)
-        elseif (bonuses[i].CoordX + bonuses[i].Width) >= (heros.x - heros.Width/2) and bonuses[i].CoordX <= (heros.x - heros.Width/2 + heros.Width) then
-            if (bonuses[i].CoordY + bonuses[i].Height) >= (heros.y - heros.Height/2) and bonuses[i].CoordY <= (heros.y - heros.Height/2 + heros.Height) then
-                table.remove(bonuses, i)
-            else
-                bonuses[i].CoordY = bonuses[i].CoordY + bonuses[i].Speed * dt * 50
-            end
+        elseif Entities.Collide(bonuses[i], heros) then
+            table.remove(bonuses, i)
+            print("BOOM!")
         else
             bonuses[i].CoordY = bonuses[i].CoordY + bonuses[i].Speed * dt * 50
         end
@@ -252,17 +244,15 @@ end
 function Entities.Draw()
     for i = 1, #ennemies do
         local currentEntity = ennemies[i]
-        local entityQuad = love.graphics.newQuad((currentEntity.Type - 1) * 16, (currentEntity.Level - 1)*16, 16, 16, 304, 400)
-        love.graphics.draw(ennemyTexturePack, entityQuad, currentEntity.CoordX, currentEntity.CoordY, 0, 2, 2)
+        love.graphics.draw(ennemyTexturePack, currentEntity.Quad, currentEntity.CoordX, currentEntity.CoordY, 0, 2, 2)
     end
     for i = 1, #neutrals do
         local currentEntity = neutrals[i]
-        local entityQuad = love.graphics.newQuad(0, (currentEntity.Type - 1)*16, 16, 16, 16, 80)
-        love.graphics.draw(neutralTexturePack, entityQuad, currentEntity.CoordX, currentEntity.CoordY, 0, 1, 1)
+        love.graphics.draw(neutralTexturePack, currentEntity.Quad, currentEntity.CoordX, currentEntity.CoordY, 0, 1, 1)
     end
     for i = 1, #bonuses do
         local currentEntity = bonuses[i]
-        love.graphics.draw(weaponTexturePack, weaponsProperties[currentEntity.Type].Quad, currentEntity.CoordX, currentEntity.CoordY, 0, 1, 1)
+        love.graphics.draw(weaponTexturePack, currentEntity.Quad, currentEntity.CoordX, currentEntity.CoordY, 0, 1, 1)
     end
 end
 
