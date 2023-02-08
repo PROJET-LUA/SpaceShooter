@@ -15,10 +15,10 @@ function Entities.Load()
     bonusTypes = 6 --nombre d'entité differentes et de textures pour l'array
 
     createEntityTimer = 0 --timer pour creer une entite: ne pas changer
-    ennemiesPerSecond = 1 --nombre d'entites par seconde
+    ennemiesPerSecond = 0.5 --nombre d'entites par seconde
     ennemyRatio = 9
-    neutralRatio = 3
-    bonusRatio = 1
+    neutralRatio = 0
+    bonusRatio = 0
     totalRatio = ennemyRatio + neutralRatio + bonusRatio
 
 
@@ -48,13 +48,14 @@ function Entities.Load()
                             Proj = true,
                             Beam = false,
                             Homing = false,
-                            FireQty = math.floor((currentLevel - 1) / 5) + 1, --hp range from 1 to 10),
-                            FireAngle = 0,
+                            FireQty = 1,
                             FireSpread = 0,
                             FireCooldown = 0,
                             FireDelay = 0,
                             Cooldown = 1,
-                            ProjSpeed = 600,
+                            Speed = 100,
+                            RangeMin = 0,
+                            RangeMax = 2000,
                             Energy = 1,
                             ShieldDmg = 5,
                             HullDmg = 0,
@@ -67,13 +68,14 @@ function Entities.Load()
                             Proj = true,
                             Beam = false,
                             Homing = false,
-                            FireQty = 40,
-                            FireAngle = 0,
+                            FireQty = 10,
                             FireSpread = 0,
-                            FireCooldown = 0.05,
+                            FireCooldown = 0.1,
                             FireDelay = 1,
-                            Cooldown = 1,
-                            ProjSpeed = 400,
+                            Cooldown = 3,
+                            Speed = 300,
+                            RangeMin = 0,
+                            RangeMax = 2000,
                             Energy = 1,
                             ShieldDmg = 1,
                             HullDmg = 1,
@@ -87,12 +89,13 @@ function Entities.Load()
                             Beam = false,
                             Homing = false,
                             FireQty = 1,
-                            FireAngle = 0,
                             FireSpread = 0,
                             FireCooldown = 0,
                             FireDelay = 0,
-                            Cooldown = 0.25,
-                            ProjSpeed = 400,
+                            Cooldown = 0.5,
+                            Speed = 400,
+                            RangeMin = 0,
+                            RangeMax = 2000,
                             Energy = 1,
                             ShieldDmg = 1,
                             HullDmg = 0,
@@ -106,12 +109,13 @@ function Entities.Load()
                             Beam = false,
                             Homing = false,
                             FireQty = 1,
-                            FireAngle = 0,
                             FireSpread = 0,
                             FireCooldown = 0,
                             FireDelay = 0,
                             Cooldown = 2,
-                            ProjSpeed = 200,
+                            Speed = 200,
+                            RangeMin = 0,
+                            RangeMax = 2000,
                             Energy = 1,
                             ShieldDmg = 5,
                             HullDmg = 1,
@@ -126,12 +130,13 @@ function Entities.Load()
                             Beam = false,
                             Homing = false,
                             FireQty = 3,
-                            FireAngle = 0,
                             FireSpread = 0,
-                            FireCooldown = 0.1,
+                            FireCooldown = 0.25,
                             FireDelay = 0,
-                            Cooldown = 0.5,
-                            ProjSpeed = 1,
+                            Cooldown = 2,
+                            Speed = 1,
+                            RangeMin = 0,
+                            RangeMax = 2000,
                             Energy = 1,
                             ShieldDmg = 1,
                             HullDmg = 1,
@@ -145,12 +150,13 @@ function Entities.Load()
                             Beam = false,
                             Homing = false,
                             FireQty = 16,
-                            FireAngle = 360,
-                            FireSpread = 0,
-                            FireCooldown = 0,
+                            FireSpread = 360,
+                            FireCooldown = 0.017,
                             FireDelay = 0,
-                            Cooldown = 1,
-                            ProjSpeed = 100,
+                            Cooldown = 2,
+                            Speed = 100,
+                            RangeMin = 0,
+                            RangeMax = 2000,
                             Energy = 1,
                             ShieldDmg = 1,
                             HullDmg = 1,
@@ -172,12 +178,15 @@ function Entities.CreateEntity(dt)
             ennemy.CoordY = 1
             ennemy.Type = math.random(1, ennemyTypes)
             ennemy.Level = math.floor((currentLevel + 1) / 2 )
-            ennemy.Speed = (0.96 + currentLevel / 50 * 2) * 0.25
+            ennemy.Speed = 1
             ennemy.LifeMax = math.floor((currentLevel - 1) / 5) + 1 --hp range from 1 to 10)
             ennemy.Life = ennemy.LifeMax
             ennemy.Quad = love.graphics.newQuad((ennemy.Type - 1) * 16, (ennemy.Level - 1)*16, 16, 16, 304, 400)
-            ennemy.Weapon = math.random(1,6)
+            ennemy.WeaponIndex = 1 --math.random(1, 6) --attribue un indice pour la table d'arme de 1 a 6
+            ennemy.FireQty = 0
             ennemy.Cooldown = 0
+            ennemy.FireDelay = 0
+            ennemy.FireCooldown = 0
             local lastEntityIndex = #ennemies
             ennemies[lastEntityIndex + 1] = ennemy
         elseif entityType > ennemyRatio and entityType <= ennemyRatio + neutralRatio then
@@ -188,7 +197,7 @@ function Entities.CreateEntity(dt)
             neutral.CoordY = 1
             neutral.Type = math.random(1, neutralTypes)
             neutral.Level = math.floor((currentLevel + 1) / 2 )
-            neutral.Speed = (0.96 + currentLevel / 50 * 2) * 0.5
+            neutral.Speed = 1
             neutral.LifeMax = neutral.Type
             neutral.Life = neutral.LifeMax
             neutral.Quad = love.graphics.newQuad(0, (neutral.Type - 1)*16, 16, 16, 16, 80)
@@ -202,7 +211,7 @@ function Entities.CreateEntity(dt)
             bonus.CoordY = 1
             bonus.Type = math.random(1, bonusTypes)
             bonus.Level = math.floor((currentLevel + 1) / 2 )
-            bonus.Speed = (0.96 + currentLevel / 50 * 2) * 0.5
+            bonus.Speed = 1
             bonus.LifeMax = 1
             bonus.Life = bonus.LifeMax
             bonus.Quad = weaponsProperties[bonus.Type].Quad
@@ -214,25 +223,39 @@ function Entities.CreateEntity(dt)
     end
 end
 
-
-function Entities.CanShoot(dt, ennemyIndex)
-    ennemies[ennemyIndex].Cooldown = ennemies[ennemyIndex].Cooldown + dt --timer pour savoir si l'ennemi a deja tire ou pas
-    if ennemies[ennemyIndex].Cooldown >= weaponsProperties[ennemies[ennemyIndex].Weapon].Cooldown then -- si l'ennemi peut tirer en tenant compte du cooldown de l'arme alors
-        if ennemies[ennemyIndex].Cooldown >= weaponsProperties[ennemies[ennemyIndex].Weapon].FireDelay then
-            if ennemies[ennemyIndex].Cooldown >= weaponsProperties[ennemies[ennemyIndex].Weapon].FireCooldown then
-                Entities.CreateProjectile(ennemyIndex)
-                ennemies[ennemyIndex].Cooldown = 0
+--- Fonction determinant si un ennemi peut tirer en fonction des parametres des armes
+function Entities.Fire(dt, ennemyIndex)
+    ennemies[ennemyIndex].Cooldown = ennemies[ennemyIndex].Cooldown + dt
+    if weaponsProperties[ennemies[ennemyIndex].WeaponIndex].FireDelay > 0 then
+        ennemies[ennemyIndex].FireDelay = ennemies[ennemyIndex].FireDelay + dt
+    end
+    if weaponsProperties[ennemies[ennemyIndex].WeaponIndex].FireCooldown > 0 then
+        ennemies[ennemyIndex].FireCooldown = ennemies[ennemyIndex].FireCooldown + dt
+    end
+    if ennemies[ennemyIndex].Cooldown >= weaponsProperties[ennemies[ennemyIndex].WeaponIndex].Cooldown then
+        if ennemies[ennemyIndex].FireDelay >= weaponsProperties[ennemies[ennemyIndex].WeaponIndex].FireDelay then
+            if ennemies[ennemyIndex].FireCooldown >= weaponsProperties[ennemies[ennemyIndex].WeaponIndex].FireCooldown then
+                if ennemies[ennemyIndex].FireQty > 0 then
+                    
+                    Entities.CreateProjectile(ennemyIndex, ennemies[ennemyIndex].FireQty)
+                    ennemies[ennemyIndex].FireQty = ennemies[ennemyIndex].FireQty - 1
+                    ennemies[ennemyIndex].FireCooldown = 0
+                else
+                    ennemies[ennemyIndex].FireQty = weaponsProperties[ennemies[ennemyIndex].WeaponIndex].FireQty
+                    ennemies[ennemyIndex].FireDelay = weaponsProperties[ennemies[ennemyIndex].WeaponIndex].FireDelay
+                    ennemies[ennemyIndex].Cooldown = 0
+                end
             end
         end    
     end
 end
 
-function Entities.CreateProjectile(ennemyIndex)
+function Entities.CreateProjectile(ennemyIndex, projectileNumber)
     local ennemyProjectile = {}
-    ennemyProjectile = weaponsProperties[ennemies[ennemyIndex].Weapon]
-    ennemyProjectile.EnnemyIndex = ennemyIndex
-    ennemyProjectile.Width = 8
-    ennemyProjectile.Height = 8
+    ennemyProjectile = weaponsProperties[ennemies[ennemyIndex].WeaponIndex]
+    ennemyProjectile.Width = 16
+    ennemyProjectile.Height = 16
+    ennemyProjectile.FireAngle = ennemyProjectile.FireSpread / (projectileNumber / ennemyProjectile.FireQty)
     ennemyProjectile.CoordX = ennemies[ennemyIndex].CoordX + ennemies[ennemyIndex].Width / 2 - ennemyProjectile.Width / 2
     ennemyProjectile.CoordY = ennemies[ennemyIndex].CoordY + ennemies[ennemyIndex].Height
     local lastProjectileIndex = #ennemiesProjectiles
@@ -251,12 +274,13 @@ end
 function Entities.Update(dt)
     for i = #ennemies, 1, -1 do
         if ennemies[i].CoordY >= screenY then
+            print("ennemi", i, " hors ecran")
             table.remove(ennemies, i)
         elseif Entities.Collide(ennemies[i], heros) then
             table.remove(ennemies, i)
             print("BOOM!")
         else
-            Entities.CanShoot(dt, i)
+            Entities.Fire(dt, i)
             ennemies[i].CoordY = ennemies[i].CoordY + ennemies[i].Speed * dt * 50
         end
     end
@@ -267,7 +291,7 @@ function Entities.Update(dt)
             table.remove(neutrals, i)
             print("BOOM!")
         else
-            neutrals[i].CoordY = neutrals[i].CoordY + neutrals[i].Speed * dt * 50
+            neutrals[i].CoordY = neutrals[i].CoordY + neutrals[i].Speed * dt * 12.5
         end
     end
     for i = #bonuses, 1, -1 do
@@ -277,28 +301,21 @@ function Entities.Update(dt)
             table.remove(bonuses, i)
             print("BOOM!")
         else
-            bonuses[i].CoordY = bonuses[i].CoordY + bonuses[i].Speed * dt * 50
+            bonuses[i].CoordY = bonuses[i].CoordY + bonuses[i].Speed * dt * 12.5
         end
     end
     for i = #ennemiesProjectiles, 1, -1 do
         if ennemiesProjectiles[i].CoordY >= screenY then
+            print("projectile #", i, " hors ecran")
             table.remove(ennemiesProjectiles, i)
         elseif Entities.Collide(ennemiesProjectiles[i], heros) then
             table.remove(ennemiesProjectiles, i)
             print("BOOM!")
         else
-            ennemiesProjectiles[i].CoordY = ennemiesProjectiles[i].CoordY + ennemiesProjectiles[i].ProjSpeed * dt
+            ennemiesProjectiles[i].CoordX = ennemiesProjectiles[i].CoordX + (1 - math.cos(ennemiesProjectiles[i].FireAngle * math.pi / 180)) * ennemiesProjectiles[i].Speed * dt --
+            ennemiesProjectiles[i].CoordY = ennemiesProjectiles[i].CoordY + (1 - math.sin(ennemiesProjectiles[i].FireAngle * math.pi / 180)) * ennemiesProjectiles[i].Speed * dt --
         end
     end
-
-
-    --for i = #bosses, 1, -1 do
-    --    if bosses[i].CoordY == screenY then
-    --        table.remove(bosses, i)
-    --    else
-    --        bosses[i].CoordY = bosses[i].CoordY + (bosses[i].Speed + 50) * dt
-    --    end
-    --end
 end
 
 function Entities.Draw()
@@ -319,6 +336,5 @@ function Entities.Draw()
         love.graphics.draw(projectileTexturePack, currentEntity.QuadProj, currentEntity.CoordX, currentEntity.CoordY, 0, 1, 1)
     end
 end
-
 
 return Entities
