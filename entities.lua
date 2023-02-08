@@ -16,8 +16,8 @@ function Entities.Load()
 
     createEntityTimer = 0 --timer pour creer une entite: ne pas changer
     ennemiesPerSecond = 1 --nombre d'entites par seconde
-    ennemyRatio = 3
-    neutralRatio = 6
+    ennemyRatio = 9
+    neutralRatio = 3
     bonusRatio = 1
     totalRatio = ennemyRatio + neutralRatio + bonusRatio
 
@@ -27,6 +27,7 @@ function Entities.Load()
     neutrals = {}
     bonuses = {}
     bosses = {}
+    ennemiesProjectiles = {}
     currentLevel = 40
 
 
@@ -171,10 +172,12 @@ function Entities.CreateEntity(dt)
             ennemy.CoordY = 1
             ennemy.Type = math.random(1, ennemyTypes)
             ennemy.Level = math.floor((currentLevel + 1) / 2 )
-            ennemy.Speed = (0.96 + currentLevel / 50 * 2) * 1.00
+            ennemy.Speed = (0.96 + currentLevel / 50 * 2) * 0.25
             ennemy.LifeMax = math.floor((currentLevel - 1) / 5) + 1 --hp range from 1 to 10)
             ennemy.Life = ennemy.LifeMax
             ennemy.Quad = love.graphics.newQuad((ennemy.Type - 1) * 16, (ennemy.Level - 1)*16, 16, 16, 304, 400)
+            ennemy.Weapon = math.random(1,6)
+            ennemy.Cooldown = 0
             local lastEntityIndex = #ennemies
             ennemies[lastEntityIndex + 1] = ennemy
         elseif entityType > ennemyRatio and entityType <= ennemyRatio + neutralRatio then
@@ -211,6 +214,31 @@ function Entities.CreateEntity(dt)
     end
 end
 
+
+function Entities.CanShoot(dt, ennemyIndex)
+    ennemies[ennemyIndex].Cooldown = ennemies[ennemyIndex].Cooldown + dt --timer pour savoir si l'ennemi a deja tire ou pas
+    if ennemies[ennemyIndex].Cooldown >= weaponsProperties[ennemies[ennemyIndex].Weapon].Cooldown then -- si l'ennemi peut tirer en tenant compte du cooldown de l'arme alors
+        if ennemies[ennemyIndex].Cooldown >= weaponsProperties[ennemies[ennemyIndex].Weapon].FireDelay then
+            if ennemies[ennemyIndex].Cooldown >= weaponsProperties[ennemies[ennemyIndex].Weapon].FireCooldown then
+                Entities.CreateProjectile(ennemyIndex)
+                ennemies[ennemyIndex].Cooldown = 0
+            end
+        end    
+    end
+end
+
+function Entities.CreateProjectile(ennemyIndex)
+    local ennemyProjectile = {}
+    ennemyProjectile = weaponsProperties[ennemies[ennemyIndex].Weapon]
+    ennemyProjectile.EnnemyIndex = ennemyIndex
+    ennemyProjectile.Width = 8
+    ennemyProjectile.Height = 8
+    ennemyProjectile.CoordX = ennemies[ennemyIndex].CoordX + ennemies[ennemyIndex].Width / 2 - ennemyProjectile.Width / 2
+    ennemyProjectile.CoordY = ennemies[ennemyIndex].CoordY + ennemies[ennemyIndex].Height
+    local lastProjectileIndex = #ennemiesProjectiles
+    ennemiesProjectiles[lastProjectileIndex + 1] = ennemyProjectile
+end
+
 function Entities.Collide(quad1, quad2)
     if  (quad1.CoordX + quad1.Width) >= (quad2.x - quad2.Width/2) and quad1.CoordX <= (quad2.x - quad2.Width/2 + quad2.Width) and
         (quad1.CoordY + quad1.Height) >= (quad2.y - quad2.Height/2) and quad1.CoordY <= (quad2.y - quad2.Height/2 + quad2.Height) then
@@ -228,6 +256,7 @@ function Entities.Update(dt)
             table.remove(ennemies, i)
             print("BOOM!")
         else
+            Entities.CanShoot(dt, i)
             ennemies[i].CoordY = ennemies[i].CoordY + ennemies[i].Speed * dt * 50
         end
     end
@@ -251,6 +280,17 @@ function Entities.Update(dt)
             bonuses[i].CoordY = bonuses[i].CoordY + bonuses[i].Speed * dt * 50
         end
     end
+    for i = #ennemiesProjectiles, 1, -1 do
+        if ennemiesProjectiles[i].CoordY >= screenY then
+            table.remove(ennemiesProjectiles, i)
+        elseif Entities.Collide(ennemiesProjectiles[i], heros) then
+            table.remove(ennemiesProjectiles, i)
+            print("BOOM!")
+        else
+            ennemiesProjectiles[i].CoordY = ennemiesProjectiles[i].CoordY + ennemiesProjectiles[i].ProjSpeed * dt
+        end
+    end
+
 
     --for i = #bosses, 1, -1 do
     --    if bosses[i].CoordY == screenY then
@@ -273,6 +313,10 @@ function Entities.Draw()
     for i = 1, #bonuses do
         local currentEntity = bonuses[i]
         love.graphics.draw(weaponTexturePack, currentEntity.Quad, currentEntity.CoordX, currentEntity.CoordY, 0, 1, 1)
+    end
+    for i = 1, #ennemiesProjectiles do
+        local currentEntity = ennemiesProjectiles[i]
+        love.graphics.draw(projectileTexturePack, currentEntity.QuadProj, currentEntity.CoordX, currentEntity.CoordY, 0, 1, 1)
     end
 end
 
