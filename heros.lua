@@ -44,13 +44,13 @@ function heros.load()
     haut = 600
 
     -- definir heros pour créé un listeSprites suivant larg et haut
-    heros.l = herosImage:getWidth()
-    heros.h = herosImage:getHeight()
-    heros.x = larg/2
-    heros.y = haut - (heros.h*2)
-    heros.supr = false
-    heros.quad = love.graphics.newQuad(0, 0, 29, 25, 29, 25)
-       
+        heros.l = herosImage:getWidth()
+        heros.h = herosImage:getHeight()
+        heros.x = larg/2
+        heros.y = haut - (heros.h*2)
+        heros.supr = false
+        heros.quad = love.graphics.newQuad(0, 0, 29, 25, 29, 25)
+
     heros.Width = herosImage:getWidth()
     heros.Height = herosImage:getHeight()
 end
