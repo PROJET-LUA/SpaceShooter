@@ -9,7 +9,8 @@
         "neutrals",
         "bonuses",
         "bosses",
-        "heros"
+        "heros",
+        "projectileTexturePack"
     ],
     "Lua.runtime.version": "LuaJIT",
     "Lua.runtime.special": [],
