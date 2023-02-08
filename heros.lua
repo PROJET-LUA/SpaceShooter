@@ -81,9 +81,6 @@ function heros.update(dt)
             end
         end
 
-        -- vérifier si le heros touche une entités 
-
-
         -- vérifier si le tir n'est pas sortie de l'écrant
         if tir.y < 0 or tir.y > haut then
             -- marque le sprite pour le suprimer plus tard
@@ -91,9 +88,9 @@ function heros.update(dt)
             table.remove(listeTirs, n)
         end
     end
-    
+
     -- définir les touche de deplacement du hero
-    if love.keyboard.isDown("right") and heros.x < 600 then
+    if love.keyboard.isDown("right") and heros.x < 600 - heros.l then
         heros.x = heros.x + 1.3
     end
     if love.keyboard.isDown("left") and heros.x > 200 then
