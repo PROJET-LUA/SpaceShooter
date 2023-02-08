@@ -10,14 +10,17 @@ heros = {}
 
 
 
+
+
+
 --liste d'éléments
 listeSprites = {}
 listeTirs = {}
 
 
-herosImage = love.graphics.newImage("images/heros.png")
-imgTir = love.graphics.newImage("images/laser1.png")
-sonShoot = love.audio.newSource("sons/shoot.wav", "static")
+local herosImage = love.graphics.newImage("images/heros.png")
+local imgTir = love.graphics.newImage("images/laser1.png")
+local sonShoot = love.audio.newSource("sons/shoot.wav", "static")
 
 
 
