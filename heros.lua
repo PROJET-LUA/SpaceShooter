@@ -1,7 +1,7 @@
 ------VARIABLE------
 
--- variable global  
-
+--constante
+SPEED = 100 -- Permet de changer la vitesse du hero
 
 
 ------TABLEAU------
@@ -91,18 +91,18 @@ function heros.update(dt)
 
     -- définir les touche de deplacement du hero
     if love.keyboard.isDown("right") and heros.x < 600 - heros.l then
-        heros.x = heros.x + 1.3
+        heros.x = heros.x + (SPEED * dt)
     end
     if love.keyboard.isDown("left") and heros.x > 200 then
-        heros.x = heros.x - 1.3
+        heros.x = heros.x - (SPEED * dt)
 
     end
     if love.keyboard.isDown("up") and heros.y > 0 then
-        heros.y = heros.y - 1.3
+        heros.y = heros.y - (SPEED * dt)
 
     end
     if love.keyboard.isDown("down") and heros.y < 600 then
-        heros.y = heros.y + 1.3
+        heros.y = heros.y + (SPEED * dt)
 
     end
 
@@ -126,9 +126,6 @@ function heros.draw()
     end
 
     love.graphics.draw(herosImage, heros.quad, heros.x, heros.y, 0, 1, 1)
-    -- afficher le nombre de listeTirs et le nombre de listeSprites actuel à l'écrant
-    --love.graphics.print("Nombre de listeTirs : "..#listeTirs.." Nombre de listeSprites : "..#listeSprites, 0, 0)
-
 end
 
 -----KEYPRESSED----- : ACTION DU JOUEUR CLAVIER

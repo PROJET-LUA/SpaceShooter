@@ -10,7 +10,7 @@ currentScreen = "menu"
 ------TABLEAU------
 ------FONCTION LOAD------
 --chargements des images
-imgMenu = love.graphics.newImage("images/menu.png")
+imgMenu = love.graphics.newImage("images/menu.jpg")
 imgGameOver = love.graphics.newImage("images/gameover.jpg")
 imgVictory = love.graphics.newImage("images/victory.jpg")
 
