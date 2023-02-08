@@ -5,9 +5,30 @@ love.graphics.setDefaultFilter("nearest")
 --setFullScreen : change taille ecrant true or false
 SetFullScreen = true
 
+currentScreen = "menu"
+
 ------TABLEAU------
 ------FONCTION LOAD------
+--chargements des images
+imgMenu = love.graphics.newImage("images/menu.png")
+imgGameOver = love.graphics.newImage("images/gameover.jpg")
+imgVictory = love.graphics.newImage("images/victory.jpg")
+
 ------FONCTION UPDATE------
+function updateMenu()
+end
+------FONCTION DRAW------
+function drawMenu()
+    love.graphics.draw(imgMenu, -100, -100)
+end
+
+function drawGameOver()
+    love.graphics.draw(imgGameOver, -100, 0)
+end
+
+function drawVictory()
+    love.graphics.draw(imgVictory, -100, 0)
+end
 ------FONCTION KEYPRESSED------
 ------FONCTION MOUSEPRESSED------
 ------FONCTION UTILE------
@@ -26,7 +47,12 @@ end
 
 -----UPDATE----- : ACTION DU JEU A CHAQUE FRAME  
 function love.update(dt)
-    myGame.Update(dt)
+    if currentScreen == "jeu" then
+        myGame.Update(dt)
+    elseif currentScreen == "menu" then
+        updateMenu()
+    end
+    
     -----------------------------------
     if love.mouse.isDown(1) then
         print(love.mouse.getPosition())
@@ -39,14 +65,28 @@ function love.draw()
     --full screen scale
     if (SetFullScreen) then love.graphics.scale(scale_x,scale_y) end
     ----------------------------------------------------
-    myGame.Draw()
+    if currentScreen == "jeu" then
+        myGame.Draw()
+    elseif currentScreen == "menu" then
+        drawMenu()
+    elseif currentScreen == "gameOver" then
+        drawGameOver()
+    elseif currentScreen == "victory" then
+        drawVictory()
+    end
 end
 
 
 
 -----KEYPRESSED----- : ACTION DU JOUEUR CLAVIER
 function love.keypressed(key)
-    myGame.keypressed(key)
+    if currentScreen == "jeu" then
+        myGame.keypressed(key)
+    elseif currentScreen == "menu" then
+        if key == "space" then
+        currentScreen = "jeu"
+        end
+    end
     print(key)
 end
 
