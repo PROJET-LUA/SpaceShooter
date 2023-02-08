@@ -54,7 +54,7 @@ function Entities.Load()
                             FireCooldown = 0,
                             FireDelay = 0,
                             Cooldown = 1,
-                            ProjSpeed = 600,
+                            ProjSpeed = 400,
                             Energy = 1,
                             ShieldDmg = 5,
                             HullDmg = 0,
@@ -73,7 +73,7 @@ function Entities.Load()
                             FireCooldown = 0.05,
                             FireDelay = 1,
                             Cooldown = 1,
-                            ProjSpeed = 400,
+                            ProjSpeed = 300,
                             Energy = 1,
                             ShieldDmg = 1,
                             HullDmg = 1,
@@ -131,7 +131,7 @@ function Entities.Load()
                             FireCooldown = 0.1,
                             FireDelay = 0,
                             Cooldown = 0.5,
-                            ProjSpeed = 1,
+                            ProjSpeed = 200,
                             Energy = 1,
                             ShieldDmg = 1,
                             HullDmg = 1,
@@ -150,7 +150,7 @@ function Entities.Load()
                             FireCooldown = 0,
                             FireDelay = 0,
                             Cooldown = 1,
-                            ProjSpeed = 100,
+                            ProjSpeed = 200,
                             Energy = 1,
                             ShieldDmg = 1,
                             HullDmg = 1,
@@ -223,7 +223,7 @@ function Entities.CanShoot(dt, ennemyIndex)
                 Entities.CreateProjectile(ennemyIndex)
                 ennemies[ennemyIndex].Cooldown = 0
             end
-        end    
+        end
     end
 end
 
@@ -231,8 +231,8 @@ function Entities.CreateProjectile(ennemyIndex)
     local ennemyProjectile = {}
     ennemyProjectile = weaponsProperties[ennemies[ennemyIndex].Weapon]
     ennemyProjectile.EnnemyIndex = ennemyIndex
-    ennemyProjectile.Width = 8
-    ennemyProjectile.Height = 8
+    ennemyProjectile.Width = 16
+    ennemyProjectile.Height = 16
     ennemyProjectile.CoordX = ennemies[ennemyIndex].CoordX + ennemies[ennemyIndex].Width / 2 - ennemyProjectile.Width / 2
     ennemyProjectile.CoordY = ennemies[ennemyIndex].CoordY + ennemies[ennemyIndex].Height
     local lastProjectileIndex = #ennemiesProjectiles
@@ -316,7 +316,7 @@ function Entities.Draw()
     end
     for i = 1, #ennemiesProjectiles do
         local currentEntity = ennemiesProjectiles[i]
-        love.graphics.draw(projectileTexturePack, currentEntity.QuadProj, currentEntity.CoordX, currentEntity.CoordY, 0, 1, 1)
+        love.graphics.draw(projectileTexturePack, currentEntity.QuadProj, currentEntity.CoordX, currentEntity.CoordY, 0, 2, 2)
     end
 end
 
