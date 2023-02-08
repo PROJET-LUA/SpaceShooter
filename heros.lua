@@ -9,51 +9,23 @@ heros = {}
 
 
 
+
 --liste d'éléments
 listeSprites = {}
 listeTirs = {}
 
 
+herosImage = love.graphics.newImage("images/heros.png")
+imgTir = love.graphics.newImage("images/laser1.png")
 sonShoot = love.audio.newSource("sons/shoot.wav", "static")
 
 
--- createSprite() permet de créé nimporte quel "sprite" du dossier images en appelant juste son nom 
-function createSprite(pNomImg, pX, pY)
-    
-    sprite = {}
-        sprite.x = pX
-        sprite.y = pY
-        sprite.supr = false
-        sprite.img = love.graphics.newImage("images/"..pNomImg..".png")
-        sprite.l = sprite.img:getWidth()
-        sprite.h = sprite.img:getHeight()
-
-    
-    table.insert(listeSprites, sprite)
-
-    return sprite
-end
 
 ------FONCTION LOAD------
-
--- startGame() au demagarge du jeu place le hero et crée les aliens
-function startGame()
-    -- place le hero
-    heros.x = larg/2
-    heros.y = haut - (heros.h*2)
-end
 ------FONCTION UPDATE------
 ------FONCTION DRAW------
 ------FONCTION KEYPRESSED------
-function creeTir(pType, pNomImg, pX, pY, pVitesseX, pVitesseY)
-    local tir = createSprite(pNomImg, pX, pY)
-    tir.type = pType
-    tir.vx = pVitesseX
-    tir.vy = pVitesseY
-    table.insert( listeTirs, tir)
 
-    sonShoot:play()
-end
 ------FONCTION MOUSEPRESSED------
 ------FONCTION UTILE------
 
@@ -72,13 +44,15 @@ function heros.load()
     haut = 600
 
     -- definir heros pour créé un listeSprites suivant larg et haut
-    heros = createSprite("heros", larg/2, haut/2)
-
-    local herosImage = love.graphics.newImage("images/heros.png")
+    heros.l = herosImage:getWidth()
+    heros.h = herosImage:getHeight()
+    heros.x = larg/2
+    heros.y = haut - (heros.h*2)
+    heros.supr = false
+    heros.quad = love.graphics.newQuad(0, 0, 29, 25, 29, 25)
+       
     heros.Width = herosImage:getWidth()
     heros.Height = herosImage:getHeight()
-    startGame()
-
 end
 
 
@@ -95,12 +69,14 @@ function heros.update(dt)
         for i = #ennemies, 1, -1 do
 
             if collideTir(tir, ennemies[i]) then
+                table.remove(listeTirs, n)
                 table.remove(ennemies, i)
             end
         end
         for i = #neutrals, 1, -1 do
 
             if collideTir(tir, neutrals[i]) then
+                table.remove(listeTirs, n)
                 table.remove(neutrals, i)
             end
         end
@@ -116,14 +92,6 @@ function heros.update(dt)
         end
     end
     
-
-    -- purge des listeSprites à suprimer 
-    for n = #listeSprites, 1, -1 do
-        if listeSprites[n].supr == true then
-            table.remove(listeSprites, n)
-        end
-    end
-
     -- définir les touche de deplacement du hero
     if love.keyboard.isDown("right") and heros.x < 600 then
         heros.x = heros.x + 1.3
@@ -155,12 +123,14 @@ end
 
 -----DRAW----- : DESSINE CE QUE TU VOIS A L'ECRAN
 function heros.draw()
-    for n = 1, #listeSprites do
-        local s = listeSprites[n]
-        love.graphics.draw(s.img, s.x, s.y, 0, 1, 1, s.l/2, s.h/2)
+    for n = 1, #listeTirs do
+        local s = listeTirs[n]
+        love.graphics.draw(imgTir, s.quad, s.x, s.y, 0, 1, 1)
     end
+
+    love.graphics.draw(herosImage, heros.quad, heros.x, heros.y, 0, 1, 1)
     -- afficher le nombre de listeTirs et le nombre de listeSprites actuel à l'écrant
-    love.graphics.print("Nombre de listeTirs : "..#listeTirs.." Nombre de listeSprites : "..#listeSprites, 0, 0)
+    --love.graphics.print("Nombre de listeTirs : "..#listeTirs.." Nombre de listeSprites : "..#listeSprites, 0, 0)
 
 end
 
@@ -169,7 +139,20 @@ function heros.keypressed(key)
 
     -- définir la touche de tir du hero
     if key == "space" then
-        creeTir("heros", "laser1", heros.x, heros.y - (heros.h*2)/2, 0, -10)
+        --creeTir("heros", "laser1", heros.x, heros.y - (heros.h*2)/2, 0, -10)
+        --creeTir(pType, pX, pY, pVitesseX, pVitesseY)
+    local tir = {}
+    tir.x = heros.x + heros.l/2 - 4.5
+    tir.y = heros.y
+    tir.vx = 0
+    tir.vy = - (heros.h*2)/2
+    tir.quad = love.graphics.newQuad(0, 0, 9, 9, 9, 9)
+    --table.insert(listeTirs, tir)
+    local tirIndex = #listeTirs
+    listeTirs[tirIndex + 1] = tir
+
+    sonShoot:play()
+
     end
 
     print(key)
