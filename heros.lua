@@ -1,7 +1,7 @@
 ------VARIABLE------
 
 --constante
-SPEED = 100 -- Permet de changer la vitesse du hero
+SPEED = 300 -- Permet de changer la vitesse du hero
 
 
 ------TABLEAU------
