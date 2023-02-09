@@ -15,7 +15,7 @@ function Entities.Load()
     bonusTypes = 6 --nombre d'entité differentes et de textures pour l'array
 
     createEntityTimer = 0 --timer pour creer une entite: ne pas changer
-    ennemiesPerSecond = 0.5 --nombre d'entites par seconde
+    ennemiesPerSecond = 20 --nombre d'entites par seconde
     ennemyRatio = 9
     neutralRatio = 0
     bonusRatio = 0
@@ -182,7 +182,7 @@ function Entities.CreateEntity(dt)
             ennemy.LifeMax = math.floor((currentLevel - 1) / 5) + 1 --hp range from 1 to 10)
             ennemy.Life = ennemy.LifeMax
             ennemy.Quad = love.graphics.newQuad((ennemy.Type - 1) * 16, (ennemy.Level - 1)*16, 16, 16, 304, 400)
-            ennemy.WeaponIndex = 1 --math.random(1, 6) --attribue un indice pour la table d'arme de 1 a 6
+            ennemy.WeaponIndex = 6 --math.random(1, 6) --attribue un indice pour la table d'arme de 1 a 6
             ennemy.FireQty = 0
             ennemy.Cooldown = 0
             ennemy.FireDelay = 0
