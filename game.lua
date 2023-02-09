@@ -24,7 +24,6 @@ function Game.Update(dt)
 end
 
 function Game.Draw()
-    -- myEntities.Draw()
     myEntities.draw()
     backGround.draw()
     hero.draw()
