@@ -1,45 +1,39 @@
 local Game = {}
 
---ennemiesPerSecond = 1 --nombre d'entites par seconde
---ennemyRatio = 0
---neutralRatio = 0
---bonusRatio = 1
-
-
 -- local myEntities = require("entities")
-local myEntities = require("entity")
-
-local heros = require("heros")
+--local myEntities = require("entity")
+local myEntities = require("EntitiesFlo")
+--local hero = require("heros")
 local backGround = require("backGround")
+local hero = require("hero")
 
 function Game.Load()
-    -- myEntities.Load()
-   myEntities.load()
 
+    -- myEntities.Load()
+    myEntities.load()
     backGround.load()
-    heros.load()
+    hero.load()
 end
 
 function Game.Update(dt)
         -- myEntities.CreateEntity(dt)
         -- myEntities.Update(dt)
-   myEntities.update(dt)
-
+    myEntities.update(dt)
     backGround.update(dt)
-    heros.update(dt)
+    hero.update(dt)
 end
 
 function Game.Draw()
     -- myEntities.Draw()
     myEntities.draw()
-
     backGround.draw()
-    heros.draw()
+    hero.draw()
 end
 
 -----KEYPRESSED----- : ACTION DU JOUEUR CLAVIER
 function Game.keypressed(key)
-    heros.keypressed(key)
+    --heros.keypressed(key)
+    myEntities.keypressed(key)
 end
 
 -----MOUSEPRESSED----- : ACTION DU JOUEUR SOURIS

@@ -12,7 +12,7 @@ local imgMonstres = love.graphics.newImage("images/ennemy.png")
 local imgShoot = love.graphics.newImage("images/projectiles.png")
 local imgBonus = love.graphics.newImage("images/weapon.png")
 
-local listSprite = {}
+local listeSprites = {}
 
 
 function loadQuad()
@@ -20,14 +20,14 @@ function loadQuad()
         CONST.ennemies[i] = {}
         CONST.ennemies[i].quad = {}
         for j = 1, 25 do
-            CONST.ennemies[i].quad[j] = love.graphics.newQuad((i-1) * 16, (j-1) * 16, 16, 16, imgMonstres)            
+            CONST.ennemies[i].quad[j] = love.graphics.newQuad((i-1) * 16, (j-1) * 16, 16, 16, imgMonstres)
         end
     end
 
     CONST.shoot.quad = {}
     for i = 1, 8, 1 do
         for j = 1, 6 , 1 do
-            CONST.shoot.quad[(i - 1) * 6 + j] = love.graphics.newQuad((i-1) * 8, (j-1) * 8, 8, 8, imgShoot)                    
+            CONST.shoot.quad[(i - 1) * 6 + j] = love.graphics.newQuad((i-1) * 8, (j-1) * 8, 8, 8, imgShoot)
         end
     end 
 end
