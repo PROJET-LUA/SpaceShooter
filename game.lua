@@ -2,17 +2,17 @@ local Game = {}
 
 -- local myEntities = require("entities")
 --local myEntities = require("entity")
-local myEntities = require("EntitiesFlo")
+local myEntities = require("Entities2")
 --local hero = require("heros")
 local backGround = require("backGround")
-local hero = require("hero")
+--local hero = require("hero")
 
 function Game.Load()
 
     -- myEntities.Load()
     myEntities.load()
     backGround.load()
-    hero.load()
+    --hero.load()
 end
 
 function Game.Update(dt)
@@ -20,13 +20,13 @@ function Game.Update(dt)
         -- myEntities.Update(dt)
     myEntities.update(dt)
     backGround.update(dt)
-    hero.update(dt)
+    --hero.update(dt)
 end
 
 function Game.Draw()
     myEntities.draw()
     backGround.draw()
-    hero.draw()
+    --hero.draw()
 end
 
 -----KEYPRESSED----- : ACTION DU JOUEUR CLAVIER
