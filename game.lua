@@ -32,7 +32,7 @@ end
 -----KEYPRESSED----- : ACTION DU JOUEUR CLAVIER
 function Game.keypressed(key)
     --heros.keypressed(key)
-    myEntities.keypressed(key)
+    --myEntities.keypressed(key)
 end
 
 -----MOUSEPRESSED----- : ACTION DU JOUEUR SOURIS

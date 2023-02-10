@@ -73,9 +73,6 @@ function ennemyShoot(s, i, dt)
     end
 end
 
-function heroShoot(s, i)
-    createShoot(s.x+2,s.y,s.shootType, math.floor(math.random(48)))
-end
 
 function createEnnemy(pX, pY, pName, pQuad)
     local newEnnemy = {x = pX, y = pY, name = pName, type = CONST.type.ennemy, quad = pQuad,
@@ -88,7 +85,6 @@ function createShoot(pX, pY, pName, pQuad)
     w = 16, h = 16, vx = 0, vy = 30}
     table.insert(listSprites, newShoot)
 end
-
 
 function createBonus(pX, pY, pName, pQuad)
     local newBonus = {x = pX, y = pY, name = pName, type = CONST.type.bonus, quad = pQuad,
@@ -149,15 +145,7 @@ EntitiesFlo.draw = function()
     end
 end
 
-EntitiesFlo.keypressed = function(key)
-    if key == "space" then
-        print("tir")
-        for i = #listSprites, 1, -1 do
-            local s = listSprites[i]
-                heroShoot(s)
-        end
-    end
-end
+
 
 
 return EntitiesFlo

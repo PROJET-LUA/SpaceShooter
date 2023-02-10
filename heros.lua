@@ -3,34 +3,16 @@
 --constante
 SPEED = 300 -- Permet de changer la vitesse du hero
 
-
 ------TABLEAU------
 heros = {}
-
-
-
-
-
-
 
 --liste d'éléments
 listeSprites = {}
 listeTirs = {}
 
-
 local herosImage = love.graphics.newImage("images/heros.png")
 local imgTir = love.graphics.newImage("images/laser1.png")
 local sonShoot = love.audio.newSource("sons/shoot.wav", "static")
-
-
-
-------FONCTION LOAD------
-------FONCTION UPDATE------
-------FONCTION DRAW------
-------FONCTION KEYPRESSED------
-
-------FONCTION MOUSEPRESSED------
-------FONCTION UTILE------
 
 function collideTir(tableprojectil, tableentites)
     if (tableentites.CoordX + tableentites.Width) >= (tableprojectil.x) and tableentites.CoordX <= (tableprojectil.x) and
@@ -57,7 +39,6 @@ function heros.load()
     heros.Width = herosImage:getWidth()
     heros.Height = herosImage:getHeight()
 end
-
 
 -----UPDATE----- : ACTION DU JEU A CHAQUE FRAME  
 function heros.update(dt)
@@ -115,8 +96,6 @@ function heros.update(dt)
         print(love.mouse.getPosition())
     end
 end
-
-    
 
     -- pour chaque listeSprites dans le tableau de listeSprites, on le dessine
     local n
