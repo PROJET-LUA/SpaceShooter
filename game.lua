@@ -25,9 +25,11 @@ function Game.Update(dt)
 end
 
 function Game.Draw()
+    
     myEntities.draw()
     backGround.draw()
     hero.draw()
+    
 end
 
 -----KEYPRESSED----- : ACTION DU JOUEUR CLAVIER
