@@ -27,8 +27,8 @@ local projectileList = {}
 local createEnnemyTimer = 0
 local ennemyFireTimer = 1
 
-player.x = 400
-player.y = 300
+--player.x = 400
+--player.y = 500
 
 
 function loadQuad()
